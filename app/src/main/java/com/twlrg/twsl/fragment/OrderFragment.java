@@ -98,6 +98,17 @@ public class OrderFragment extends BaseFragment implements PullToRefreshBase.OnR
         }
     };
 
+    private static OrderFragment instance = null;
+
+    public static OrderFragment newInstance()
+    {
+        if (instance == null)
+        {
+            instance = new OrderFragment();
+        }
+        return instance;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {

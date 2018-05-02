@@ -13,6 +13,7 @@ import com.twlrg.twsl.R;
 import com.twlrg.twsl.fragment.HomeFragment;
 import com.twlrg.twsl.fragment.MessageFragment;
 import com.twlrg.twsl.fragment.OrderFragment;
+import com.twlrg.twsl.fragment.OrderListFragment;
 import com.twlrg.twsl.fragment.UserCenterFragment;
 
 import butterknife.BindView;
@@ -30,7 +31,7 @@ public class MainActivity extends BaseActivity
 
     UserCenterFragment mUserCenterFragment = new UserCenterFragment();
 
-    private Class fragmentArray[] = {HomeFragment.class, MessageFragment.class, OrderFragment.class, mUserCenterFragment.getClass()};
+    private Class fragmentArray[] = {HomeFragment.class, MessageFragment.class, OrderListFragment.class, mUserCenterFragment.getClass()};
 
 
     @Override
