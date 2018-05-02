@@ -1,5 +1,6 @@
 package com.twlrg.twsl.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -34,6 +35,7 @@ import java.io.IOException;
  * Created by user1 on 2015/7/29.
  * 展示图片 并点击放大
  */
+@SuppressLint("AppCompatCustomView")
 public class HtmlTextView extends TextView implements Html.ImageGetter, HtmlDisplayer
 {
     CharSequence data;

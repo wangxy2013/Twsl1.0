@@ -9,188 +9,177 @@ package com.twlrg.twsl.utils;
  */
 public class Urls
 {
-    public static final String HTTP_IP = "http://112.35.65.211:8085";
+    public static final String HTTP_IP = "http://www.shanglvbuluo.com";
 
-    public static final String BASE_URL = HTTP_IP + "/fp/";
+    public static final String BASE_URL = HTTP_IP + "/api/";
 
+    //获取版本信息
+    public static String getVersionUrl()
+    {
+        return BASE_URL + "merchant/search";
+    }
+
+    public static String getImgUrl(String url)
+    {
+        return HTTP_IP + url;
+    }
 
     //用戶登录
     public static String getLoginUrl()
     {
-        return BASE_URL + "clientLogin.do";
+        return BASE_URL + "user/login";
     }
 
-    //查询某一农户户主及其全部成员信息（包括农户全部成员信息）
-    public static String getFamilyMemberInfoUrl()
+
+    //用戶头像上传
+    public static String getUploadPicUrl()
     {
-        return BASE_URL + "cust/familyMemberInfo.do";
+        return BASE_URL + "user/update_portrait";
     }
 
 
-    //查询户主信息列表
-    public static String getHolderInfoListUrl()
+    //首页酒店列表
+    public static String getHotelListUrl()
     {
-        return BASE_URL + "cust/holderInfo.do";
+        return BASE_URL + "merchant/search";
     }
 
-    //查询户主信息列表
-    public static String getSearchHolderInfoUrl()
+    //首页酒店列表
+    public static String getHotelByKeywordUrl()
     {
-        return BASE_URL + "cust/searchHolderInfoForApp.do";
+        return BASE_URL + "merchant/keyword_title";
     }
 
-    //查询發佈信息
-    public static String getPublishInfoListUrl()
+
+    //酒店详细
+    public static String getHotelDetailUrl()
     {
-        return BASE_URL + "pub/getPublishInfo.do";
+        return BASE_URL + "merchant/detail";
     }
 
-
-    //机构ID列表
-    public static String getOrgListUrl()
+    //用户注册
+    public static String getRegisterUrl()
     {
-        return BASE_URL + "cust/getOrgForApp.do";
+        return BASE_URL + "user/register";
     }
 
-    //健康状况类型
-    public static String getAllHealthyTypeUrl()
+    //获取用户信息
+    public static String getUserInfoUrl()
     {
-        return BASE_URL + "cust/getAllHealthyTypeForApp.do";
+        return BASE_URL + "user/user_info";
     }
 
-    //咨询问题类型
-    public static String getConsultTypeUrl()
+    //获取短信验证码
+    public static String getVerifycodeUrl()
     {
-        return BASE_URL + "consult/getConsultTypeForApp.do";
+        return BASE_URL + "user/verifycode";
     }
 
-    //行政区划列表
-    public static String getDepListUrl()
+    //修改密码
+    public static String getUpdatePwdUrl()
     {
-        return BASE_URL + "dept/deptInfo.do";
+        return BASE_URL + "user/update_pwd";
     }
 
-
-    //、农户关系类型
-    public static String getAllRelationTypeUrl()
+    //找回密码
+    public static String getForgetPwdUrl()
     {
-        return BASE_URL + "cust/getAllRelationTypeForApp.do";
+        return BASE_URL + "user/set_pwd";
     }
 
-    //就业状况列表
-    public static String getAllWorkTypeUrl()
+
+    //修改用户信息
+    public static String getUpdateUserInfoUrl()
     {
-        return BASE_URL + "cust/getAllWorkTypeForApp.do";
+        return BASE_URL + "user/update_userinfo";
     }
 
-    //教育分段列表
-    public static String getEduPhaseTypeUrl()
+    //生成订单
+    public static String getCreatOrderUrl()
     {
-        return BASE_URL + "edu/getEduPhaseTypeForApp.do";
+        return BASE_URL + "order/create_order";
     }
 
-    //2.6咨询信息
-    public static String getConsultInfoUrl()
+    //获取订单列表
+    public static String getOrderListUrl()
     {
-        return BASE_URL + "consult/getConsultInfo.do";
+        return BASE_URL + "order/list_info";
     }
 
-    //2.6咨询信息
-    public static String getSaveConsultInfoUrl()
+    //获取订单详情
+    public static String getOrderDetailUrl()
     {
-        return BASE_URL + "consult/saveConsultInfo.do";
+        return BASE_URL + "order/order_detail";
     }
 
-    //新增农户信息
-    public static String getAddCustomerUrl()
+    //取消订单申请
+    public static String getOrderCancelUrl()
     {
-        return BASE_URL + "cust/addCustomer.do";
+        return BASE_URL + "order/order_cancel";
     }
 
-    //根据pid获得单条个人信息
-    public static String getCustomerInfoByPidUrl()
+    //订单明细
+    public static String getOrderDetailedUrl()
     {
-        return BASE_URL + "cust/getCustomerInfoByPid.do";
+        return BASE_URL + "order/detailed";
     }
 
 
-
-    //获取家庭成员信息
-    public static String getFamilyMemberListUrl()
+    //选择销售
+    public static String getSelectSaleUrl()
     {
-        return BASE_URL + "cust/familyMemberInfo.do";
+        return BASE_URL + "order/select_sale";
     }
 
-    //获取pid行政区划下的全部大病救助信息列表
-    public static String getHtyInfoListUrl()
+    //获取销售
+    public static String getSaleListUrl()
     {
-        return BASE_URL + "hty/htyInfo.do";
+        return BASE_URL + "order/sale_list";
     }
 
-
-    //获取pid行政区划下的全部大病救助信息列表
-    public static String getSearchHtyUrl()
+    //发布评论
+    public static String getAddCommentUrl()
     {
-        return BASE_URL + "hty/searchInfo.do";
+        return BASE_URL + "comment/add";
     }
 
 
-
-    //增加大病帮扶信息
-    public static String getAddHtyAssistInfoUrl()
+    //获取评论列表
+    public static String getCommentListUrl()
     {
-        return BASE_URL + "hty/addHtyAssistInfo.do";
+        return BASE_URL + "comment/list_info";
     }
 
-    //根据pid的行政区划获取该行政区划下的全部教育救助信息
-    public static String getEduInfoListUrl()
+    //设施信息
+    public static String getFacilitiesUrl()
     {
-        return BASE_URL + "edu/eduInfo.do";
+        return BASE_URL + "merchant/facilities";
     }
 
-    //根据pid的行政区划获取该行政区划下的全部教育救助信息
-    public static String getSearchEduUrl()
+    //获取城市信息
+    public static String getCityListUrl()
     {
-        return BASE_URL + "edu/searchInfo.do";
+        return BASE_URL + "city/list_info";
     }
 
-    //修改教育帮扶信息
-    public static String getAddEduAssistInfoUrl()
+    //获取城市信息
+    public static String getRegionListUrl()
     {
-        return BASE_URL + "edu/addEduAssistInfo.do";
+        return BASE_URL + "city/list_region";
     }
 
 
-    //新增咨询信息
-    public static String getAddConsultInfoUrl()
+    //获取支付宝支付
+    public static String getAlipayUrl()
     {
-        return BASE_URL + "consult/addConsultInfo.do";
+        return BASE_URL + "alipay/pay";
     }
 
-
-    //根据指定的pid获得该pid发布的咨询信息
-    public static String getConsultInfoByPidUrl()
+    //获取微信支付
+    public static String getWxpayUrl()
     {
-        return BASE_URL + "consult/getConsultInfoByPid.do";
+        return BASE_URL + "wxpay/pay";
     }
 
-    //满意度提交
-    public static String getEvaluationUrl()
-    {
-        return BASE_URL + "consult/Evaluation.do";
-    }
-
-    //获取天气
-    public static String getWeatherUrl()
-    {
-        return "https://way.jd.com/jisuapi/weather?city=宿迁&cityid=&citycode=&appkey=11a66cf37e494499829ffdc2fd63ac7c";
-    }
-
-
-    //获取天气
-    public static String geVersionUrl()
-    {
-        return BASE_URL + "getAppVersion.do";
-    }
 
 }

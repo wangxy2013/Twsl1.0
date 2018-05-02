@@ -15,6 +15,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 
+
+import com.twlrg.twsl.R;
 import com.twlrg.twsl.entity.VersionInfo;
 import com.twlrg.twsl.http.DataRequest;
 import com.twlrg.twsl.http.HttpRequest;
@@ -31,7 +33,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import com.twlrg.twsl.R;
+
 public class VersionManager implements IRequestListener
 {
     private Context mContext;
@@ -44,7 +46,7 @@ public class VersionManager implements IRequestListener
     private static final String savePath = "/sdcard/bangfu/";
 
     private static final String saveFileName = savePath
-            + "app.apk";
+            + "svmuu.apk";
 
     /* 进度条与通知ui刷新的handler和msg常量 */
     private ProgressBar mProgress;
@@ -104,7 +106,7 @@ public class VersionManager implements IRequestListener
     public void init()
     {
         Map<String, String> valuePairs = new HashMap<>();
-        DataRequest.instance().request(mContext, Urls.geVersionUrl(), this, HttpRequest.POST, GET_VERSION, valuePairs,
+        DataRequest.instance().request(mContext, Urls.getVersionUrl(), this, HttpRequest.POST, GET_VERSION, valuePairs,
                 new VersionInfoHandler());
     }
 

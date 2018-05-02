@@ -1,6 +1,7 @@
 package com.twlrg.twsl.activity;
 
 import android.annotation.TargetApi;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,10 +11,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+
 import com.twlrg.twsl.R;
+import com.twlrg.twsl.utils.DialogUtils;
 import com.twlrg.twsl.utils.LogUtil;
 import com.twlrg.twsl.utils.StatusBarUtil;
-import com.twlrg.twsl.widget.CustomProgressDialog;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -28,6 +30,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 {
 
     Unbinder mUnbinder;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -35,7 +38,8 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
         initData();
         initViews(savedInstanceState);
-        mUnbinder = ButterKnife.bind(this);;//注册黄油刀
+        mUnbinder = ButterKnife.bind(this);
+        ;//注册黄油刀
         initEvent();
         initViewData();
     }
@@ -45,7 +49,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
      *
      * @param isDark
      */
-    public void setStausBarTextDeep(boolean isDark)
+    public void setStatusBarTextDeep(boolean isDark)
     {
         if (isDark == true)
         {
@@ -128,13 +132,33 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         //        MobclickAgent.onPageStart(mPageName);
         //        MobclickAgent.onResume(this);
     }
+
     @Override
     public void onClick(View v)
     {
+        if (isFastClick())
+        {
+            return;
+        }
+
     }
 
-    public static final int  MIN_CLICK_DELAY_TIME = 1000;
-    private             long lastClickTime        = 0;
+    private static final int MIN_DELAY_TIME = 1000;  // 两次点击间隔不能少于1000ms
+    private static long lastClickTime;
+
+    public static boolean isFastClick()
+    {
+        boolean flag = true;
+        long currentClickTime = System.currentTimeMillis();
+        if ((currentClickTime - lastClickTime) >= MIN_DELAY_TIME)
+        {
+            flag = false;
+        }
+        lastClickTime = currentClickTime;
+        return flag;
+    }
+
+    public static final int MIN_CLICK_DELAY_TIME = 1000;
 
 
     protected static final int REQUEST_STORAGE_READ_ACCESS_PERMISSION  = 101;
@@ -146,7 +170,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
      * 如果权限被拒绝过，则提示用户需要权限
      */
     @TargetApi(Build.VERSION_CODES.M)
-    protected void requestPermission(final String permission, String rationale, final int requestCode)
+    public void requestPermission(final String permission, String rationale, final int requestCode)
     {
         if (shouldShowRequestPermissionRationale(permission))
         {
@@ -192,14 +216,14 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     }
 
 
-    private CustomProgressDialog mProgressDialog = null;
+    private Dialog mProgressDialog = null;
 
     /**
      * @return void
      * @throws [异常类型] [异常说明]
      * @see
      */
-    protected void showProgressDialog()
+    public void showProgressDialog()
     {
 
         if (isFinishing())
@@ -209,14 +233,12 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         LogUtil.e("TAG", "showProgressDialog");
         if (mProgressDialog == null)
         {
-            mProgressDialog = CustomProgressDialog.createDialog(this);
+            mProgressDialog = DialogUtils.createLoadingDialog(this,"加载中...");
         }
-        mProgressDialog.setTitle("");
-        mProgressDialog.setMessage("");
         mProgressDialog.show();
     }
 
-    protected void hideProgressDialog()
+    public void hideProgressDialog()
     {
         if (isFinishing())
         {
@@ -229,7 +251,9 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
             mProgressDialog = null;
         }
     }
-    protected void onDestroy() {
+
+    protected void onDestroy()
+    {
         super.onDestroy();
         mUnbinder.unbind();
     }

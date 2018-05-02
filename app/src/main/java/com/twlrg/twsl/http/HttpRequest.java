@@ -3,13 +3,7 @@ package com.twlrg.twsl.http;
 import android.content.Context;
 import android.util.Log;
 
-import com.squareup.okhttp.FormEncodingBuilder;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.MultipartBuilder;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
+
 import com.twlrg.twsl.json.JsonHandler;
 import com.twlrg.twsl.utils.LogUtil;
 
@@ -17,6 +11,14 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 
 public class HttpRequest implements Runnable
@@ -51,20 +53,20 @@ public class HttpRequest implements Runnable
         this(action, type, url, listener, handler);
         this.mContext = mContext;
         this.valuePair = valuePairs;
-//        valuePair.put("os_version", APPUtils.getCurrentapiVersion() + "");
-//        valuePair.put("os", "android");
+        //        valuePair.put("os_version", APPUtils.getCurrentapiVersion() + "");
+        //        valuePair.put("os", "android");
         //valuePair.put("channel", ConstantUtil.CHANNEL_NO);
-//        valuePair.put("version", APPUtils.getVersionName(mContext));
+        //        valuePair.put("version", APPUtils.getVersionName(mContext));
         if (valuePair == null)
         {
             valuePair = new HashMap<>();
         }
     }
 
-    public HttpRequest(int action, String type, String url, File mFile,
+    public HttpRequest(Context mContext,int action, String type, String url,  Map<String, String> valuePairs, File mFile,
                        IRequestListener listener, JsonHandler handler)
     {
-        this(action, type, url, listener, handler);
+        this(mContext,action, type, url,valuePairs, listener, handler);
         this.mFile = mFile;
     }
 
@@ -129,8 +131,8 @@ public class HttpRequest implements Runnable
     private String doGet() throws Exception
     {
         OkHttpClient mOkHttpClient = new OkHttpClient();
-        mOkHttpClient.setConnectTimeout(10, TimeUnit.SECONDS);
-        //        mOkHttpClient.newBuilder().connectTimeout(10, TimeUnit.SECONDS);
+        // mOkHttpClient.setConnectTimeout(10, TimeUnit.SECONDS);
+        mOkHttpClient.newBuilder().connectTimeout(10, TimeUnit.SECONDS);
         //        mOkHttpClient.newBuilder().readTimeout(10, TimeUnit.SECONDS);
         //        mOkHttpClient.newBuilder().writeTimeout(10, TimeUnit.SECONDS);
         urlRequest = urlRequest + concatParams();
@@ -152,15 +154,16 @@ public class HttpRequest implements Runnable
 
         LogUtil.e("TAG", urlRequest + concatParams());
         OkHttpClient mOkHttpClient = new OkHttpClient();
-        mOkHttpClient.setConnectTimeout(30, TimeUnit.SECONDS);
-        //                mOkHttpClient.newBuilder().connectTimeout(10, TimeUnit.SECONDS);
+        // mOkHttpClient.connectTimeoutMillis()
+        // mOkHttpClient.setConnectTimeout(30, TimeUnit.SECONDS);
+        mOkHttpClient.newBuilder().connectTimeout(10, TimeUnit.SECONDS);
         //                mOkHttpClient.newBuilder().readTimeout(10, TimeUnit.SECONDS);
         //                mOkHttpClient.newBuilder().writeTimeout(10, TimeUnit.SECONDS);
         /**
          * 3.0之后版本
          */
-        //   FormBody.Builder builder = new FormBody.Builder();
-        FormEncodingBuilder builder = new FormEncodingBuilder();
+        FormBody.Builder builder = new FormBody.Builder();
+        //FormEncodingBuilder builder = new FormEncodingBuilder();
         /**
          * 在这对添加的参数进行遍历，map遍历有四种方式，如果想要了解的可以网上查找
          */
@@ -199,23 +202,45 @@ public class HttpRequest implements Runnable
             return body;
 
         }
+        else
+        {
+            LogUtil.e("TAG", "response--->" + response.code());
+        }
         return null;
     }
 
 
     private String doUpload() throws Exception
     {
-        OkHttpClient mOkHttpClient = new OkHttpClient();
-        mOkHttpClient.setConnectTimeout(60, TimeUnit.SECONDS);
-        MultipartBuilder multipartBuilder = new MultipartBuilder().type(MultipartBuilder.FORM);
-        //添加一个文本表单参数
-        multipartBuilder.addFormDataPart("filename", mFile.getName());
-        LogUtil.d("TAG", "filename:" + mFile.getName());
-        multipartBuilder.addFormDataPart("face", mFile.getName(), RequestBody.create(MediaType.parse("image/png"), mFile));
-        LogUtil.d("TAG", "upfacepic:" + mFile.getName());
-        //构造文件上传时的请求对象Request
-        Request request = new Request.Builder().url(urlRequest).post(multipartBuilder.build()).build();
-        Response response = mOkHttpClient.newCall(request).execute();// execute
+
+        OkHttpClient client = new OkHttpClient();
+        RequestBody fileBody = RequestBody.create(MediaType.parse("application/octet-stream"), mFile);
+
+        RequestBody multipartBody = new MultipartBody.Builder()
+                .setType(MultipartBody.ALTERNATIVE)
+                .addFormDataPart("uid", valuePair.get("uid"))
+                .addFormDataPart("role", valuePair.get("role"))
+                .addFormDataPart("token", valuePair.get("token"))
+                .addFormDataPart("data", "plans.xml", fileBody).build();
+
+
+        Request request = new Request.Builder().url(urlRequest)
+                .addHeader("User-Agent", "android")
+                .header("Content-Type", "text/html; charset=utf-8;")
+                .post(multipartBody)//传参数、文件或者混合，改一下就行请求体就行
+                .build();
+
+        //        OkHttpClient mOkHttpClient = new OkHttpClient();
+        //        mOkHttpClient.setConnectTimeout(60, TimeUnit.SECONDS);
+        //        MultipartBuilder multipartBuilder = new MultipartBuilder().type(MultipartBuilder.FORM);
+        //        //添加一个文本表单参数
+        //        multipartBuilder.addFormDataPart("filename", mFile.getName());
+        //        LogUtil.d("TAG", "filename:" + mFile.getName());
+        //        multipartBuilder.addFormDataPart("face", mFile.getName(), RequestBody.create(MediaType.parse("image/png"), mFile));
+        //        LogUtil.d("TAG", "upfacepic:" + mFile.getName());
+        //        //构造文件上传时的请求对象Request
+        //        Request request = new Request.Builder().url(urlRequest).post(multipartBuilder.build()).build();
+        Response response = client.newCall(request).execute();// execute
         if (response.isSuccessful())
         {
             System.out.println(response.code());
@@ -283,7 +308,7 @@ public class HttpRequest implements Runnable
     {
         StringBuffer sb = new StringBuffer();
         sb.append("?");
-      //  sb.append("&");
+        //  sb.append("&");
         for (Map.Entry<String, String> map : valuePair.entrySet())
         {
             String key = map.getKey().toString();

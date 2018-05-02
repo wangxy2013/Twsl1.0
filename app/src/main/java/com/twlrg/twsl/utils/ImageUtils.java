@@ -14,7 +14,6 @@ import android.graphics.LinearGradient;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
-import android.graphics.PorterDuff;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
@@ -845,7 +844,7 @@ public class ImageUtils
     public static String base64Encode(Bitmap bitmap)
     {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
+        bitmap.compress(CompressFormat.PNG, 100, bos);
         byte[] bytes = bos.toByteArray();
 
         try
@@ -874,7 +873,7 @@ public class ImageUtils
         {
             //如果图片不存在，就创建一个色块
             ColorDrawable drawable = new ColorDrawable(Color.GRAY);
-            src = Bitmap.createBitmap(output_size, output_size, drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565);
+            src = Bitmap.createBitmap(output_size, output_size, drawable.getOpacity() != PixelFormat.OPAQUE ? Config.ARGB_8888 : Config.RGB_565);
             Canvas canvas = new Canvas(src);
             drawable.setBounds(0, 0, output_size, output_size);
             drawable.draw(canvas);
@@ -891,11 +890,11 @@ public class ImageUtils
         final Paint paint = new Paint();
         paint.setAntiAlias(true);
 
-        Bitmap result = Bitmap.createBitmap(output_size, output_size, Bitmap.Config.ARGB_8888);
+        Bitmap result = Bitmap.createBitmap(output_size, output_size, Config.ARGB_8888);
         Canvas canvas = new Canvas(result);
         //canvas.drawARGB(0,0,0,0);//背景透明效果
         canvas.drawCircle(radius, radius, radius, paint);
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
 
         float translate_x = (result.getWidth() - scaledSrc.getWidth()) / 2;
         float translate_y = (result.getHeight() - scaledSrc.getHeight()) / 2;
@@ -915,7 +914,7 @@ public class ImageUtils
     {
         final Paint paint = new Paint();
         paint.setAntiAlias(true);
-        Bitmap result = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
+        Bitmap result = Bitmap.createBitmap(100, 100, Config.ARGB_8888);
         Canvas canvas = new Canvas(result);
         v.draw(canvas);
         return result;

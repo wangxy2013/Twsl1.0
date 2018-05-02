@@ -188,43 +188,6 @@ public class APPUtils
         return mDeviceId;
     }
 
-    /**
-     * 获取一个能唯一标识每台Android设备的序号与服务器通信
-     *
-     * @param mContext
-     * @return
-     */
-    public static String getuniqueId(Context mContext)
-    {
-        TelephonyManager tm = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
-        String imei = tm.getDeviceId();
-        String simSerialNumber = tm.getSimSerialNumber();
-        String androidId = android.provider.Settings.Secure
-                .getString(mContext.getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
-        UUID deviceUuid = new UUID(androidId.hashCode(), ((long) imei.hashCode() << 32) | simSerialNumber.hashCode());
-        String uniqueId = deviceUuid.toString();
-        return uniqueId;
-    }
-
-    /**
-     * 获取设备IMEI
-     *
-     * @param mContext
-     * @return
-     */
-    public static String getIMEI(Context mContext)
-    {
-        String mImei = "NULL";
-        try
-        {
-            mImei = ((TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
-        } catch (Exception e)
-        {
-            System.out.println("获取IMEI码失败");
-            mImei = "000000000000000";
-        }
-        return mImei;
-    }
 
     /**
      * 〈获取手机分辨率〉
@@ -294,7 +257,7 @@ public class APPUtils
     public static int getCurrentapiVersion()
 
     {
-        return android.os.Build.VERSION.SDK_INT;
+        return Build.VERSION.SDK_INT;
 
     }
 
@@ -656,5 +619,30 @@ public class APPUtils
         {
             APPUtils.runApk(mContext, ConstantUtil.THIRD_PACKAGENAME, ConstantUtil.THIRD_CLASSNAME);
         }
+    }
+
+
+    public static int getStatusBarHeight(Context context)
+    {
+        int result = 0;
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0)
+        {
+            result = context.getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+
+
+    /**
+     * 调用拨号界面
+     *
+     * @param phone 电话号码
+     */
+    public static void callPhone(Context cxt, String phone)
+    {
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        cxt.startActivity(intent);
     }
 }

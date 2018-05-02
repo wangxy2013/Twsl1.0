@@ -5,6 +5,7 @@ package com.twlrg.twsl.widget;
  * Date: 2015-08-04 17:15
  * DESC: 圆角图片
  */
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -22,6 +23,7 @@ import android.widget.ImageView;
 import com.twlrg.twsl.R;
 
 
+@SuppressLint("AppCompatCustomView")
 public class RoundAngleImageView extends ImageView
 {
 
