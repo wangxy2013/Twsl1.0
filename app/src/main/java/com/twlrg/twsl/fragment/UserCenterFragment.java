@@ -36,6 +36,7 @@ import com.twlrg.twsl.activity.ModifyPwdActivity;
 import com.twlrg.twsl.http.DataRequest;
 import com.twlrg.twsl.http.HttpRequest;
 import com.twlrg.twsl.http.IRequestListener;
+import com.twlrg.twsl.json.LoginHandler;
 import com.twlrg.twsl.json.ResultHandler;
 import com.twlrg.twsl.listener.MyItemClickListener;
 import com.twlrg.twsl.utils.APPUtils;
@@ -72,35 +73,26 @@ public class UserCenterFragment extends BaseFragment implements View.OnClickList
     TextView        tvCancel;
     @BindView(R.id.iv_user_head)
     CircleImageView ivUserHead;
-    @BindView(R.id.et_nickName)
-    EditText        etNickName;
-    @BindView(R.id.tv_account)
-    TextView        tvAccount;
-    @BindView(R.id.et_userName)
-    EditText        etUserName;
-    @BindView(R.id.tv_userSex)
-    TextView        tvUserSex;
     @BindView(R.id.tv_userPhone)
     TextView        tvUserPhone;
-    @BindView(R.id.et_userEmail)
-    EditText        etUserEmail;
     @BindView(R.id.tv_modify_pwd)
     TextView        tvModifyPwd;
-    @BindView(R.id.tv_version)
-    TextView        tvVersion;
     @BindView(R.id.btn_logout)
     Button          btnLogout;
     @BindView(R.id.topView)
     View            topView;
+
+
     private View rootView = null;
     private Unbinder unbinder;
 
     private int mEditStatus;
-    private int sexType;
 
-    private static final int REQUEST_SUCCESS    = 0x01;
-    public static final  int REQUEST_FAIL       = 0x02;
-    private static final int UPLOAD_PIC_SUCCESS = 0x03;
+    private static final int    REQUEST_SUCCESS    = 0x01;
+    public static final  int    REQUEST_FAIL       = 0x02;
+    private static final int    UPLOAD_PIC_SUCCESS = 0x03;
+    private static final int    GET_USER_SUCCESS   = 0x04;
+    private static final String GET_USER           = "GET_USER";
 
     private static final String UPLOAD_USER_PIC  = "upload_user_pic";
     private static final String UPDATE_USER_INFO = "update_user_info";
@@ -129,10 +121,6 @@ public class UserCenterFragment extends BaseFragment implements View.OnClickList
 
                 case REQUEST_SUCCESS:
 
-                    ConfigManager.instance().setUserEmail(etUserEmail.getText().toString());
-                    ConfigManager.instance().setUserSex(sexType);
-                    ConfigManager.instance().setUserName(etUserName.getText().toString());
-                    ConfigManager.instance().setUserNickName(etNickName.getText().toString());
                     showEditStatus(false);
                     ToastUtil.show(getActivity(), "保存成功");
 
@@ -188,28 +176,11 @@ public class UserCenterFragment extends BaseFragment implements View.OnClickList
         {
 
             ImageLoader.getInstance().displayImage(Urls.getImgUrl(ConfigManager.instance().getUserPic()), ivUserHead);
-            etNickName.setText(ConfigManager.instance().getUserNickName());
-            tvAccount.setText(ConfigManager.instance().getMobile());
-            etUserName.setText(ConfigManager.instance().getUserName());
+//            etNickName.setText(ConfigManager.instance().getUserNickName());
+//            etUserName.setText(ConfigManager.instance().getUserName());
 
-            int sex = ConfigManager.instance().getUserSex();
-
-            if (sex == 0)
-            {
-                tvUserSex.setText("保密");
-            }
-            else if (sex == 1)
-            {
-                tvUserSex.setText("男");
-            }
-            else
-            {
-                tvUserSex.setText("女");
-            }
 
             tvUserPhone.setText(ConfigManager.instance().getMobile());
-            etUserEmail.setText(ConfigManager.instance().getUserEmail());
-            tvVersion.setText("版本：V" + APPUtils.getVersionName(getActivity()));
         }
         showEditStatus(false);
     }
@@ -233,7 +204,6 @@ public class UserCenterFragment extends BaseFragment implements View.OnClickList
         tvCancel.setOnClickListener(this);
         tvModifyPwd.setOnClickListener(this);
         btnLogout.setOnClickListener(this);
-        tvUserSex.setOnClickListener(this);
         ivUserHead.setOnClickListener(this);
     }
 
@@ -241,6 +211,7 @@ public class UserCenterFragment extends BaseFragment implements View.OnClickList
     protected void initViewData()
     {
         showEditStatus(false);
+        topView.setVisibility(View.VISIBLE);
         topView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, APPUtils.getStatusBarHeight(getActivity())));
         mSelectPicturePopupWindow = new SelectPicturePopupWindow(getActivity());
         mSelectPicturePopupWindow.setOnSelectedListener(new SelectPicturePopupWindow.OnSelectedListener()
@@ -268,6 +239,14 @@ public class UserCenterFragment extends BaseFragment implements View.OnClickList
 
         mDestinationUri = Uri.fromFile(new File(getActivity().getCacheDir(), "cropImage.jpeg"));
         mTempPhotoPath = Environment.getExternalStorageDirectory() + File.separator + "photo.jpeg";
+
+        Map<String, String> valuePairs = new HashMap<>();
+        valuePairs.put("uid", ConfigManager.instance().getUserID());
+        valuePairs.put("token", ConfigManager.instance().getToken());
+        DataRequest.instance().request(getActivity(), Urls.getUserInfoUrl(), this, HttpRequest.POST, GET_USER, valuePairs,
+                new ResultHandler());
+
+
     }
 
     @Override
@@ -289,20 +268,15 @@ public class UserCenterFragment extends BaseFragment implements View.OnClickList
             tvCancel.setVisibility(View.VISIBLE);
             tvEdit.setText("保存");
             mEditStatus = 1;
-            etNickName.setEnabled(true);
-            etUserName.setEnabled(true);
-            etUserEmail.setEnabled(true);
-            tvUserSex.setEnabled(true);
+            //etNickName.setEnabled(true);
         }
         else
         {
             tvCancel.setVisibility(View.GONE);
             tvEdit.setText("编辑");
             mEditStatus = 0;
-            etNickName.setEnabled(false);
-            etUserName.setEnabled(false);
-            etUserEmail.setEnabled(false);
-            tvUserSex.setEnabled(false);
+//            etNickName.setEnabled(false);
+//            etUserName.setEnabled(false);
         }
     }
 
@@ -325,38 +299,32 @@ public class UserCenterFragment extends BaseFragment implements View.OnClickList
             {
                 //TODO 执行保存操作  保存成功后 调用  showEditStatus(false);
 
-                String nickname = etNickName.getText().toString();
-                String name = etUserName.getText().toString();
-                String email = etUserEmail.getText().toString();
-
-
-                if (StringUtils.stringIsEmpty(nickname))
-                {
-                    ToastUtil.show(getActivity(), "请输入昵称");
-                    return;
-                }
-                if (StringUtils.stringIsEmpty(name))
-                {
-                    ToastUtil.show(getActivity(), "请输入姓名");
-                    return;
-                }
-
-                if (!StringUtils.checkEmail(email))
-                {
-                    ToastUtil.show(getActivity(), "请输入正确的邮箱");
-                    return;
-                }
-                ((MainActivity) getActivity()).showProgressDialog();
-                Map<String, String> valuePairs = new HashMap<>();
-                valuePairs.put("uid", ConfigManager.instance().getUserID());
-                valuePairs.put("token", ConfigManager.instance().getToken());
-                valuePairs.put("role", "1");
-                valuePairs.put("nickname", nickname);
-                valuePairs.put("sex", sexType + "");
-                valuePairs.put("email", email);
-                valuePairs.put("name", name);
-                DataRequest.instance().request(getActivity(), Urls.getUpdateUserInfoUrl(), this, HttpRequest.POST, UPDATE_USER_INFO, valuePairs,
-                        new ResultHandler());
+//                String nickname = etNickName.getText().toString();
+//                String name = etUserName.getText().toString();
+//
+//
+//                if (StringUtils.stringIsEmpty(nickname))
+//                {
+//                    ToastUtil.show(getActivity(), "请输入昵称");
+//                    return;
+//                }
+//                if (StringUtils.stringIsEmpty(name))
+//                {
+//                    ToastUtil.show(getActivity(), "请输入姓名");
+//                    return;
+//                }
+//
+//                ((MainActivity) getActivity()).showProgressDialog();
+//                Map<String, String> valuePairs = new HashMap<>();
+//                valuePairs.put("uid", ConfigManager.instance().getUserID());
+//                valuePairs.put("token", ConfigManager.instance().getToken());
+//                valuePairs.put("role", "1");
+//                valuePairs.put("nickname", nickname);
+//                valuePairs.put("sex", "");
+//                valuePairs.put("email", "");
+//                valuePairs.put("name", name);
+//                DataRequest.instance().request(getActivity(), Urls.getUpdateUserInfoUrl(), this, HttpRequest.POST, UPDATE_USER_INFO, valuePairs,
+//                        new ResultHandler());
 
             }
         }
@@ -368,31 +336,6 @@ public class UserCenterFragment extends BaseFragment implements View.OnClickList
         else if (v == tvModifyPwd)
         {
             startActivity(new Intent(getActivity(), ModifyPwdActivity.class));
-        }
-        else if (v == tvUserSex)
-        {
-            String[] sexArr = getActivity().getResources().getStringArray(R.array.sexType);
-            DialogUtils.showCategoryDialog(getActivity(), Arrays.asList(sexArr), new MyItemClickListener()
-            {
-                @Override
-                public void onItemClick(View view, int position)
-                {
-                    sexType = position;
-
-                    if (sexType == 0)
-                    {
-                        tvUserSex.setText("保密");
-                    }
-                    else if (sexType == 1)
-                    {
-                        tvUserSex.setText("男");
-                    }
-                    else
-                    {
-                        tvUserSex.setText("女");
-                    }
-                }
-            });
         }
         else if (v == ivUserHead)
         {
@@ -422,6 +365,18 @@ public class UserCenterFragment extends BaseFragment implements View.OnClickList
             if (ConstantUtil.RESULT_SUCCESS.equals(resultCode))
             {
                 mHandler.sendMessage(mHandler.obtainMessage(UPLOAD_PIC_SUCCESS, obj));
+            }
+
+            else
+            {
+                mHandler.sendMessage(mHandler.obtainMessage(REQUEST_FAIL, resultMsg));
+            }
+        }
+        else if (GET_USER.equals(action))
+        {
+            if (ConstantUtil.RESULT_SUCCESS.equals(resultCode))
+            {
+                mHandler.sendMessage(mHandler.obtainMessage(GET_USER_SUCCESS, obj));
             }
 
             else
@@ -542,13 +497,13 @@ public class UserCenterFragment extends BaseFragment implements View.OnClickList
             try
             {
 
-                File mFile =     new File(new URI(resultUri.toString()));
+                File mFile = new File(new URI(resultUri.toString()));
                 Map<String, String> valuePairs = new HashMap<>();
                 valuePairs.put("uid", ConfigManager.instance().getUserID());
                 valuePairs.put("token", ConfigManager.instance().getToken());
                 valuePairs.put("role", "1");
                 valuePairs.put("submit", "Submit");
-                DataRequest.instance().request(getActivity(), Urls.getUploadPicUrl(), this, HttpRequest.UPLOAD, UPLOAD_USER_PIC, valuePairs,mFile,
+                DataRequest.instance().request(getActivity(), Urls.getUploadPicUrl(), this, HttpRequest.UPLOAD, UPLOAD_USER_PIC, valuePairs, mFile,
                         new ResultHandler());
             } catch (Exception e)
             {

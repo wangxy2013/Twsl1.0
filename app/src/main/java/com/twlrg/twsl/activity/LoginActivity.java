@@ -151,7 +151,7 @@ public class LoginActivity extends BaseActivity implements IRequestListener
             Map<String, String> valuePairs = new HashMap<>();
             valuePairs.put("mobile", mUserName);
             valuePairs.put("pwd", mPwd);
-            valuePairs.put("role", "1");
+            valuePairs.put("role", "2");
             DataRequest.instance().request(LoginActivity.this, Urls.getLoginUrl(), this, HttpRequest.POST, USER_LOGIN, valuePairs,
                     new LoginHandler());
         }

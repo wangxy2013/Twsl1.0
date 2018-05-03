@@ -23,7 +23,7 @@ public class ConfigManager
     /**
      * config
      */
-    private static String            CONFIG_NAME        = "config";
+    private static String            CONFIG_NAME        = "twsl_config";
 
     private static final String IS_FRIST_LOGING   = "IS_FRIST_LOGING";
     private static final String USER_PWD          = "user_pwd";//密码

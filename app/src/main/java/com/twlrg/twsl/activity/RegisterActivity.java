@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.twlrg.twsl.R;
 import com.twlrg.twsl.http.DataRequest;
 import com.twlrg.twsl.http.HttpRequest;
@@ -20,6 +19,8 @@ import com.twlrg.twsl.utils.StringUtils;
 import com.twlrg.twsl.utils.ToastUtil;
 import com.twlrg.twsl.utils.Urls;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,6 +47,21 @@ public class RegisterActivity extends BaseActivity implements IRequestListener
     EditText  etPwd1;
     @BindView(R.id.btn_register)
     Button    btnRegister;
+    @BindView(R.id.et_nickname)
+    EditText  etNickname;
+    @BindView(R.id.et_position)
+    EditText  etPosition;
+    @BindView(R.id.tv_role_type1)
+    TextView  tvRoleType1;
+    @BindView(R.id.tv_role_type2)
+    TextView  tvRoleType2;
+    @BindView(R.id.tv_role_type3)
+    TextView  tvRoleType3;
+    @BindView(R.id.tv_role_type4)
+    TextView  tvRoleType4;
+    private boolean isRoleType1, isRoleType2, isRoleType3, isRoleType4;
+
+    private List<Boolean> isRoleTypeList = new ArrayList<>();
 
     private static final int    REQUEST_REGISTER_SUCCESS = 0x01;
     public static final  int    REQUEST_FAIL             = 0x02;
@@ -86,6 +102,7 @@ public class RegisterActivity extends BaseActivity implements IRequestListener
     protected void initData()
     {
 
+
     }
 
     @Override
@@ -102,6 +119,10 @@ public class RegisterActivity extends BaseActivity implements IRequestListener
         ivBack.setOnClickListener(this);
         tvGetCode.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
+        tvRoleType1.setOnClickListener(this);
+        tvRoleType2.setOnClickListener(this);
+        tvRoleType3.setOnClickListener(this);
+        tvRoleType4.setOnClickListener(this);
     }
 
     @Override
@@ -130,7 +151,7 @@ public class RegisterActivity extends BaseActivity implements IRequestListener
             }
 
             Map<String, String> valuePairs = new HashMap<>();
-            valuePairs.put("mobile",phone);
+            valuePairs.put("mobile", phone);
             DataRequest.instance().request(RegisterActivity.this, Urls.getVerifycodeUrl(), this, HttpRequest.POST, GET_CODE, valuePairs,
                     new ResultHandler());
         }
@@ -140,7 +161,27 @@ public class RegisterActivity extends BaseActivity implements IRequestListener
             String code = etCode.getText().toString();
             String pwd = etPwd.getText().toString();
             String pwd1 = etPwd1.getText().toString();
+            String nickname = etNickname.getText().toString();
+            String position = etPosition.getText().toString();
+            isRoleTypeList.clear();
+            isRoleTypeList.add(isRoleType1);
+            isRoleTypeList.add(isRoleType2);
+            isRoleTypeList.add(isRoleType3);
+            isRoleTypeList.add(isRoleType4);
 
+
+
+            if (StringUtils.stringIsEmpty(nickname))
+            {
+                ToastUtil.show(this, "请输入姓名");
+                return;
+            }
+
+            if (StringUtils.stringIsEmpty(position))
+            {
+                ToastUtil.show(this, "请输入职务");
+                return;
+            }
 
             if (StringUtils.stringIsEmpty(phone) || phone.length() < 11)
             {
@@ -164,17 +205,91 @@ public class RegisterActivity extends BaseActivity implements IRequestListener
                 return;
             }
 
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < isRoleTypeList.size(); i++)
+            {
+                if (isRoleTypeList.get(i))
+                {
+                    sb.append(i + 1);
+                    sb.append(",");
+                }
+            }
+
+            String role_type = sb.toString();
+
+            if (StringUtils.stringIsEmpty(role_type))
+            {
+                ToastUtil.show(this, "请选择业务范围");
+                return;
+            }
+
             Map<String, String> valuePairs = new HashMap<>();
-            valuePairs.put("nickname",phone);
-            valuePairs.put("mobile",phone);
-            valuePairs.put("pwd",pwd);
-            valuePairs.put("role","1");
-            valuePairs.put("sex","0");
-            valuePairs.put("verifycode",code);
+            valuePairs.put("nickname", nickname);
+            valuePairs.put("position", position);
+            valuePairs.put("email", "");
+            valuePairs.put("mobile", phone);
+            valuePairs.put("pwd", pwd);
+            valuePairs.put("role", "2");
+            valuePairs.put("sex", "0");
+            valuePairs.put("role_type", role_type.substring(0, role_type.length() - 1));
+
+            valuePairs.put("verifycode", code);
             DataRequest.instance().request(RegisterActivity.this, Urls.getRegisterUrl(), this, HttpRequest.POST, USER_REGISTER, valuePairs,
                     new ResultHandler());
 
 
+        }
+        else if (v == tvRoleType1)
+        {
+            if (isRoleType1)
+            {
+                isRoleType1 = false;
+                tvRoleType1.setSelected(false);
+            }
+            else
+            {
+                isRoleType1 = true;
+                tvRoleType1.setSelected(true);
+            }
+        }
+        else if (v == tvRoleType2)
+        {
+            if (isRoleType2)
+            {
+                isRoleType2 = false;
+                tvRoleType2.setSelected(false);
+            }
+            else
+            {
+                isRoleType2 = true;
+                tvRoleType2.setSelected(true);
+            }
+        }
+        else if (v == tvRoleType3)
+        {
+            if (isRoleType3)
+            {
+                isRoleType3 = false;
+                tvRoleType3.setSelected(false);
+            }
+            else
+            {
+                isRoleType3 = true;
+                tvRoleType3.setSelected(true);
+            }
+        }
+        else if (v == tvRoleType4)
+        {
+            if (isRoleType4)
+            {
+                isRoleType4 = false;
+                tvRoleType4.setSelected(false);
+            }
+            else
+            {
+                isRoleType4 = true;
+                tvRoleType4.setSelected(true);
+            }
         }
     }
 
@@ -209,4 +324,5 @@ public class RegisterActivity extends BaseActivity implements IRequestListener
 
 
     }
+
 }
