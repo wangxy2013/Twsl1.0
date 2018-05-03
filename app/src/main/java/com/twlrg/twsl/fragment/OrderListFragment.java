@@ -118,8 +118,9 @@ public class OrderListFragment extends BaseFragment implements View.OnClickListe
         mViewLayout.setLayoutParams(topViewParams);
 
         MyViewPagerAdapter viewPagerAdapter = new MyViewPagerAdapter(getChildFragmentManager());
-        viewPagerAdapter.addFragment(OrderFragment.newInstance(), "热门推荐");//添加Fragment
-        viewPagerAdapter.addFragment(OrderFragment.newInstance(), "工作室");
+        viewPagerAdapter.addFragment(OrderFragment.newInstance(), "待处理");//添加Fragment
+        viewPagerAdapter.addFragment(OrderFragment.newInstance(), "今日入住");
+        viewPagerAdapter.addFragment(OrderFragment.newInstance(), "全部订单");
         mViewPager.setAdapter(viewPagerAdapter);//设置适配器
 
         mTabLayout.addTab(mTabLayout.newTab().setText("待处理"));//给TabLayout添加Tab
