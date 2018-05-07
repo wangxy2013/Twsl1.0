@@ -112,20 +112,20 @@ public class OrderListFragment extends BaseFragment implements View.OnClickListe
     @Override
     protected void initViewData()
     {
-        int widthPixels = APPUtils.getScreenWidth(getActivity());
-        //设置状态栏高度
-        LinearLayout.LayoutParams topViewParams = new LinearLayout.LayoutParams(widthPixels, APPUtils.getStatusBarHeight(getActivity()));
-        mViewLayout.setLayoutParams(topViewParams);
+//        int widthPixels = APPUtils.getScreenWidth(getActivity());
+//        //设置状态栏高度
+//        LinearLayout.LayoutParams topViewParams = new LinearLayout.LayoutParams(widthPixels, APPUtils.getStatusBarHeight(getActivity()));
+//        mViewLayout.setLayoutParams(topViewParams);
 
         MyViewPagerAdapter viewPagerAdapter = new MyViewPagerAdapter(getChildFragmentManager());
         viewPagerAdapter.addFragment(OrderFragment.newInstance(), "待处理");//添加Fragment
-        viewPagerAdapter.addFragment(OrderFragment.newInstance(), "今日入住");
-        viewPagerAdapter.addFragment(OrderFragment.newInstance(), "全部订单");
+        //viewPagerAdapter.addFragment(OrderFragment.newInstance(), "今日入住");
+//        viewPagerAdapter.addFragment(OrderFragment.newInstance(), "全部订单");
         mViewPager.setAdapter(viewPagerAdapter);//设置适配器
 
         mTabLayout.addTab(mTabLayout.newTab().setText("待处理"));//给TabLayout添加Tab
-        mTabLayout.addTab(mTabLayout.newTab().setText("今日入住"));
-        mTabLayout.addTab(mTabLayout.newTab().setText("全部订单"));
+       // mTabLayout.addTab(mTabLayout.newTab().setText("今日入住"));
+//        mTabLayout.addTab(mTabLayout.newTab().setText("全部订单"));
         mTabLayout.setupWithViewPager(mViewPager);//给TabLayout设置关联ViewPager，如果设置了ViewPager，那么ViewPagerAdapter中的getPageTitle()方法返回的就是Tab上的标题
     }
 

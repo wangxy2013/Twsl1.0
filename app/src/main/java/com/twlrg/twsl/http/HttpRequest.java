@@ -63,10 +63,10 @@ public class HttpRequest implements Runnable
         }
     }
 
-    public HttpRequest(Context mContext,int action, String type, String url,  Map<String, String> valuePairs, File mFile,
+    public HttpRequest(Context mContext, int action, String type, String url, Map<String, String> valuePairs, File mFile,
                        IRequestListener listener, JsonHandler handler)
     {
-        this(mContext,action, type, url,valuePairs, listener, handler);
+        this(mContext, action, type, url, valuePairs, listener, handler);
         this.mFile = mFile;
     }
 
@@ -217,11 +217,12 @@ public class HttpRequest implements Runnable
         RequestBody fileBody = RequestBody.create(MediaType.parse("application/octet-stream"), mFile);
 
         RequestBody multipartBody = new MultipartBody.Builder()
-                .setType(MultipartBody.ALTERNATIVE)
+                .setType(MultipartBody.FORM)
                 .addFormDataPart("uid", valuePair.get("uid"))
                 .addFormDataPart("role", valuePair.get("role"))
                 .addFormDataPart("token", valuePair.get("token"))
-                .addFormDataPart("data", "plans.xml", fileBody).build();
+                .addFormDataPart("submit", "Submit")
+                .addFormDataPart("file", mFile.getName(), fileBody).build();
 
 
         Request request = new Request.Builder().url(urlRequest)
