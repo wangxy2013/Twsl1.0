@@ -9,12 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.twlrg.twsl.MyApplication;
 import com.twlrg.twsl.R;
 import com.twlrg.twsl.activity.BaseHandler;
 import com.twlrg.twsl.activity.LoginActivity;
+import com.twlrg.twsl.activity.MainActivity;
 import com.twlrg.twsl.activity.OrderDetailActivity;
 import com.twlrg.twsl.adapter.OrderAdapter;
 import com.twlrg.twsl.entity.OrderInfo;
@@ -23,10 +25,12 @@ import com.twlrg.twsl.http.HttpRequest;
 import com.twlrg.twsl.http.IRequestListener;
 import com.twlrg.twsl.json.OrderListHandler;
 import com.twlrg.twsl.listener.MyItemClickListener;
+import com.twlrg.twsl.utils.APPUtils;
 import com.twlrg.twsl.utils.ConfigManager;
 import com.twlrg.twsl.utils.ConstantUtil;
 import com.twlrg.twsl.utils.ToastUtil;
 import com.twlrg.twsl.utils.Urls;
+import com.twlrg.twsl.widget.AutoFitTextView;
 import com.twlrg.twsl.widget.EmptyDecoration;
 import com.twlrg.twsl.widget.list.refresh.PullToRefreshBase;
 import com.twlrg.twsl.widget.list.refresh.PullToRefreshRecyclerView;
@@ -45,15 +49,14 @@ import butterknife.Unbinder;
  * 邮箱：wangxianyun1@163.com
  * 描述：订单
  */
-public class OrderFragment extends BaseFragment implements PullToRefreshBase.OnRefreshListener<RecyclerView>, IRequestListener
+public class OrderFragment2 extends BaseFragment implements PullToRefreshBase.OnRefreshListener<RecyclerView>, IRequestListener
 {
-
-    @BindView(R.id.pullToRefreshRecyclerView)
-    PullToRefreshRecyclerView mPullToRefreshRecyclerView;
     @BindView(R.id.btn_load)
-    Button                    btnLoad;
+    Button                       btnLoad;
     @BindView(R.id.ll_no_data)
     LinearLayout              llNoData;
+    @BindView(R.id.pullToRefreshRecyclerView)
+    PullToRefreshRecyclerView mPullToRefreshRecyclerView;
     private View rootView = null;
     private Unbinder unbinder;
 
@@ -65,10 +68,9 @@ public class OrderFragment extends BaseFragment implements PullToRefreshBase.OnR
     private String keyword = "", s_date = "", e_date = "";
 
 
-    private static final String GET_ORDER_LIST = "get_order_list";
-
-    private static final int REQUEST_SUCCESS = 0x01;
-    private static final int REQUEST_FAIL    = 0x02;
+    private static final String GET_ORDER_LIST  = "get_order_list";
+    private static final int    REQUEST_SUCCESS = 0x01;
+    private static final int    REQUEST_FAIL    = 0x02;
 
     private BaseHandler mHandler = new BaseHandler(getActivity())
     {
@@ -105,13 +107,13 @@ public class OrderFragment extends BaseFragment implements PullToRefreshBase.OnR
         }
     };
 
-    private static OrderFragment instance = null;
+    private static OrderFragment2 instance = null;
 
-    public static OrderFragment newInstance(String keyword, String s_date, String e_date)
+    public static OrderFragment2 newInstance(String keyword, String s_date, String e_date)
     {
         if (instance == null)
         {
-            instance = new OrderFragment();
+            instance = new OrderFragment2();
         }
         Bundle b = new Bundle();
         b.putString("keyword", keyword);
@@ -147,14 +149,13 @@ public class OrderFragment extends BaseFragment implements PullToRefreshBase.OnR
     {
         super.onResume();
 
-    }
 
+    }
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser)
-    {
+    public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
 
-        if (isVisibleToUser)
+        if(isVisibleToUser)
         {
             if (MyApplication.getInstance().isLogin())
             {
@@ -230,7 +231,7 @@ public class OrderFragment extends BaseFragment implements PullToRefreshBase.OnR
         valuePairs.put("uid", ConfigManager.instance().getUserID());
         valuePairs.put("token", ConfigManager.instance().getToken());
         valuePairs.put("role", "2");
-        valuePairs.put("type", "0");
+        valuePairs.put("type", "1");
         valuePairs.put("page", pn + "");
         valuePairs.put("keyword", keyword);
         valuePairs.put("s_date", s_date);
@@ -292,6 +293,4 @@ public class OrderFragment extends BaseFragment implements PullToRefreshBase.OnR
             unbinder = null;
         }
     }
-
-
 }

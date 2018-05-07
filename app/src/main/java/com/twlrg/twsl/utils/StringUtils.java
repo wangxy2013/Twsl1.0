@@ -147,6 +147,21 @@ public class StringUtils
     }
 
 
+    /**
+     *
+     * 描述:获取下一个月.
+     *
+     * @return
+     */
+    public static String getNextMonth() {
+        Calendar cal = Calendar.getInstance();
+        cal.add(cal.MONTH, 1);
+        SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd");
+        String preMonth = dft.format(cal.getTime());
+        return preMonth;
+    }
+
+
     public static int getIndex(String str, String[] codeArr)
     {
         int mIndex = 0;

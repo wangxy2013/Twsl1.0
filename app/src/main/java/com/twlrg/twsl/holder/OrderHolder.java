@@ -22,12 +22,13 @@ public class OrderHolder extends RecyclerView.ViewHolder
 
 
     private AutoFitTextView mHotelNameTv;
-    private TextView        mPriceTv;
+    private TextView        mTypeTv;
     private TextView        mTitleTv;
-    private TextView        mOrderStatusTv;
+    private TextView        mRoomNumberTv;
     private TextView        mNameTv;
     private TextView        mCreateTimeTv;
-    private TextView        mEvaluateTv;
+    private TextView        mOrderCodeTv;
+    private TextView        mDaysTv;
     private LinearLayout    mItemLayout;
 
     private MyItemClickListener listener1;
@@ -35,13 +36,14 @@ public class OrderHolder extends RecyclerView.ViewHolder
     public OrderHolder(View rootView, MyItemClickListener listener1)
     {
         super(rootView);
-        mEvaluateTv = (TextView) rootView.findViewById(R.id.tv_evaluate);
+        mDaysTv = (TextView) rootView.findViewById(R.id.tv_days);
+        mOrderCodeTv = (TextView) rootView.findViewById(R.id.tv_order_code);
         mHotelNameTv = (AutoFitTextView) rootView.findViewById(R.id.tv_merchant);
-        mPriceTv = (TextView) rootView.findViewById(R.id.tv_total_fee);
+        mTypeTv = (TextView) rootView.findViewById(R.id.tv_type);
         mTitleTv = (TextView) rootView.findViewById(R.id.tv_title);
         mNameTv = (TextView) rootView.findViewById(R.id.tv_name);
         mCreateTimeTv = (TextView) rootView.findViewById(R.id.tv_create_time);
-        mOrderStatusTv = (TextView) rootView.findViewById(R.id.tv_payment_trade_status);
+        mRoomNumberTv = (TextView) rootView.findViewById(R.id.tv_room_number);
         mItemLayout = (LinearLayout) rootView.findViewById(R.id.ll_item);
         this.listener1 = listener1;
     }
@@ -49,40 +51,30 @@ public class OrderHolder extends RecyclerView.ViewHolder
 
     public void setOrderInfo(final OrderInfo mOrderInfo, final Context mContext, final int p)
     {
-        mEvaluateTv.setVisibility(View.GONE);
-        mHotelNameTv.setText(mOrderInfo.getMerchant());
-        mPriceTv.setText("￥" + mOrderInfo.getTotal_fee());
-        mTitleTv.setText(mOrderInfo.getTitle() + "  " + mOrderInfo.getBuynum() + "间  " + mOrderInfo.getDays() + "晚");
-        mNameTv.setText(mOrderInfo.getName() + " " + mOrderInfo.getCheck_in() + "入住");
-        mCreateTimeTv.setText(mOrderInfo.getCreate_time());
-        String status = "待支付";
-
-
-        switch (mOrderInfo.getIs_used())
+        String price_type = mOrderInfo.getPrice_type();
+        String zc = "无早";
+        if ("wz".equals(price_type))
         {
-            case 0:
-                status = "待支付";
-                break;
-            case 1:
-                status = "已预订成功";
-                mEvaluateTv.setVisibility(View.VISIBLE);
-                break;
-            case 2:
-                status = "酒店满房拒单";
-                break;
-            case 3:
-                status = "取消确认中";
-                break;
-            case 4:
-                status = "已取消";
-                break;
-            case 5:
-                status = "酒店拒绝取消";
-                break;
+            zc = "无早";
+        }
+        else if ("dz".equals(price_type))
+        {
+            zc = "单早";
+        }
+        else if ("sz".equals(price_type))
+        {
+            zc = "双早";
         }
 
 
-        mOrderStatusTv.setText(status);
+        mHotelNameTv.setText(mOrderInfo.getMerchant());
+        mTypeTv.setText("￥" + mOrderInfo.getTotal_fee());
+        mTitleTv.setText(mOrderInfo.getTitle() + "[" + zc + "]");
+        mNameTv.setText(mOrderInfo.getName() + " " + mOrderInfo.getCheck_in());
+        mCreateTimeTv.setText(mOrderInfo.getCreate_time());
+        mOrderCodeTv.setText("订单号:" + mOrderInfo.getOrdcode());
+        mRoomNumberTv.setText(mOrderInfo.getBuynum() + "间");
+        mDaysTv.setText(mOrderInfo.getDays() + "晚");
         mItemLayout.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -92,15 +84,7 @@ public class OrderHolder extends RecyclerView.ViewHolder
             }
         });
 
-        //跳转评价界面
-        mEvaluateTv.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                mContext.startActivity(new Intent(mContext, AddCommentActivity.class).putExtra("MERCHANT_ID", mOrderInfo.getMerchant_id()));
-            }
-        });
+
     }
 
 }

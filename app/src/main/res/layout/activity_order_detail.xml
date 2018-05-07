@@ -148,78 +148,6 @@
                 android:background="@color/line"/>
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dm_15"
-                android:layout_marginRight="@dimen/dm_15"
-                android:layout_marginTop="@dimen/dm_10"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="@dimen/dm_0"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="支付状态"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/t14"/>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="7">
-                    <TextView
-                        android:id="@+id/tv_status"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="已支付"
-                        android:textColor="@color/orange"
-                        android:textSize="@dimen/t14"/>
-
-
-                    <TextView
-                        android:id="@+id/tv_fwf"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:text="(含服务费)"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/t10"/>
-
-
-                    <TextView
-                        android:id="@+id/tv_total_fee"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/tv_fwf"
-                        android:text="0"
-                        android:textColor="@color/orange"
-                        android:textSize="@dimen/t14"/>
-
-                </RelativeLayout>
-            </LinearLayout>
-
-
-            <TextView
-                android:id="@+id/tv_price_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginRight="@dimen/dm_15"
-                android:layout_marginTop="@dimen/dm_15"
-                android:text="费用明细"
-                android:textColor="@color/green"
-                android:textSize="@dimen/t16"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dm_1"
-                android:layout_marginTop="@dimen/dm_10"
-                android:background="@color/line"/>
-
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -258,7 +186,7 @@
                     android:layout_width="@dimen/dm_0"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="发票"
+                    android:text="发票要求"
                     android:textColor="@color/black"
                     android:textSize="@dimen/t14"/>
                 <TextView
@@ -275,94 +203,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dm_1"
                 android:background="@color/line"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dm_10"
-                android:layout_marginLeft="@dimen/dm_15"
-                android:layout_marginTop="@dimen/dm_10"
-                android:gravity="center_vertical">
-
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="温馨提示"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/t14"/>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="7"
-                    android:text="@string/wxts"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/t14"/>
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dm_1"
-                android:background="@color/line"/>
-
-
-            <RelativeLayout
-                android:id="@+id/rl_sale"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/dm_10"
-                android:visibility="gone">
-
-
-                <com.twlrg.slbl.widget.CircleImageView
-                    android:id="@+id/iv_user_head"
-                    android:layout_width="@dimen/dm_50"
-                    android:layout_height="@dimen/dm_50"
-                    android:layout_centerVertical="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_user"/>
-
-
-                <TextView
-                    android:id="@+id/tv_salesperson"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/dm_15"
-                    android:layout_toRightOf="@+id/iv_user_head"
-                    android:text="111"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/t14"/>
-
-                <TextView
-                    android:id="@+id/tv_position"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/dm_15"
-                    android:layout_toRightOf="@+id/tv_salesperson"
-                    android:text="销售总监"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/t14"/>
-
-
-                <ImageView
-                    android:id="@+id/iv_message"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dm_40"
-                    android:layout_toLeftOf="@+id/iv_phone"
-                    android:src="@drawable/ic_message_on"/>
-
-                <ImageView
-                    android:id="@+id/iv_phone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_phone"/>
-
-            </RelativeLayout>
 
         </LinearLayout>
     </ScrollView>
@@ -374,7 +214,6 @@
         android:background="@color/windowBackground"
         android:orientation="horizontal">
         <Button
-            android:visibility="gone"
             android:id="@+id/btn_cancel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -383,7 +222,8 @@
             android:background="@color/green"
             android:text="取消预订"
             android:textColor="@color/white"
-            android:textSize="@dimen/t16"/>
+            android:textSize="@dimen/t16"
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/btn_status"
