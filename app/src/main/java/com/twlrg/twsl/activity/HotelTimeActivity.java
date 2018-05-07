@@ -99,18 +99,22 @@ public class HotelTimeActivity extends BaseActivity
         stopDay = new DayTimeEntity(-1, -1, -1, -1);
         datas = new ArrayList<>();
 
-        Calendar c = Calendar.getInstance();
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH) + 1;
-
-        c.add(Calendar.MONTH, 1);
-        int nextYear = c.get(Calendar.YEAR);
-        int nextMonth = c.get(Calendar.MONTH) + 1;
-
-        datas.add(new MonthTimeEntity(year, month));                //当前月份
-        datas.add(new MonthTimeEntity(nextYear, nextMonth));        //下个月
-        datas.add(new MonthTimeEntity(nextYear, nextMonth + 1));
-
+//        Calendar c = Calendar.getInstance();
+//        int year = c.get(Calendar.YEAR);
+//        int month = c.get(Calendar.MONTH) + 1;
+//
+//        c.add(Calendar.MONTH, 1);
+//        int nextYear = c.get(Calendar.YEAR);
+//        int nextMonth = c.get(Calendar.MONTH) + 1;
+//
+//        datas.add(new MonthTimeEntity(year, month));                //当前月份
+//        datas.add(new MonthTimeEntity(nextYear, nextMonth));        //下个月
+//        datas.add(new MonthTimeEntity(nextYear, nextMonth + 1));
+        for (int i = 0; i < 12; i++)
+        {
+            String[] time = StringUtils.getMonthAndYear(i);
+            datas.add(new MonthTimeEntity(Integer.parseInt(time[0]), Integer.parseInt(time[1])));
+        }
 
         adapter = new MonthTimeAdapter(datas, HotelTimeActivity.this);
         mReycycler.setAdapter(adapter);

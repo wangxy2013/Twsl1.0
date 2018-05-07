@@ -36,7 +36,7 @@ public class RoomInfo implements Serializable
     private String pic6;///Uploads/room/4/59016503241ce.jpg
     private String status;//0,
     private String isdelete;//0,
-    private double price;//200,
+    private int price;//200,
     private String price_type;//wz
     private List<String> picList = new ArrayList<>();
     public RoomInfo(JSONObject obj)
@@ -62,7 +62,7 @@ public class RoomInfo implements Serializable
         this.status = obj.optString("status");
         this.isdelete = obj.optString("isdelete");
         this.price_type = obj.optString("price_type");
-        this.price=obj.optDouble("price");
+        this.price=obj.optInt("price");
 
     }
 
@@ -296,12 +296,12 @@ public class RoomInfo implements Serializable
         this.isdelete = isdelete;
     }
 
-    public double getPrice()
+    public int getPrice()
     {
         return price;
     }
 
-    public void setPrice(double price)
+    public void setPrice(int price)
     {
         this.price = price;
     }
@@ -314,5 +314,10 @@ public class RoomInfo implements Serializable
     public void setPrice_type(String price_type)
     {
         this.price_type = price_type;
+    }
+
+    public void setPicList(List<String> picList)
+    {
+        this.picList = picList;
     }
 }
