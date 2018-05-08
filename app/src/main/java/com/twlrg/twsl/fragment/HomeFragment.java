@@ -329,34 +329,33 @@ public class HomeFragment extends BaseFragment implements PullToRefreshBase.OnRe
             }
         });
 
-
-        mEtKeyword.addTextChangedListener(new TextWatcher()
-        {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after)
-            {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s)
-            {
-                if (s.length() == 0)
-                {
-                    ((MainActivity) getActivity()).showProgressDialog();
-                    hotelInfoList.clear();
-                    pn = 1;
-                    mRefreshStatus = 0;
-                    getHotelList();
-                }
-            }
-        });
+        //        mEtKeyword.addTextChangedListener(new TextWatcher()
+        //        {
+        //            @Override
+        //            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+        //            {
+        //
+        //            }
+        //
+        //            @Override
+        //            public void onTextChanged(CharSequence s, int start, int before, int count)
+        //            {
+        //
+        //            }
+        //
+        //            @Override
+        //            public void afterTextChanged(Editable s)
+        //            {
+        //                if (s.length() == 0)
+        //                {
+        //                    ((MainActivity) getActivity()).showProgressDialog();
+        //                    hotelInfoList.clear();
+        //                    pn = 1;
+        //                    mRefreshStatus = 0;
+        //                    getHotelList();
+        //                }
+        //            }
+        //        });
 
     }
 
@@ -392,8 +391,8 @@ public class HomeFragment extends BaseFragment implements PullToRefreshBase.OnRe
                         .putExtra("CITY_VALUE", mCityValue)
                         .putExtra("S_DATE", mStartDate)
                         .putExtra("E_DATE", mEndDate)
-                        .putExtra("LNG", lng)
-                        .putExtra("LAT", lat)
+                        .putExtra("LNG", String.valueOf(lng))
+                        .putExtra("LAT", String.valueOf(lat))
 
 
                 );
@@ -700,18 +699,6 @@ public class HomeFragment extends BaseFragment implements PullToRefreshBase.OnRe
             {
                 // mHandler.sendMessage(mHandler.obtainMessage(REQUEST_FAIL, resultMsg));
             }
-        }
-    }
-
-    @Override
-    public void onDestroyView()
-    {
-        super.onDestroyView();
-
-        if (null != unbinder)
-        {
-            unbinder.unbind();
-            unbinder = null;
         }
     }
 

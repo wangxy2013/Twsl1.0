@@ -27,7 +27,6 @@ public class MessageFragment extends BaseFragment
     View                      topView;
     @BindView(R.id.pullToRefreshRecyclerView)
     PullToRefreshRecyclerView pullToRefreshRecyclerView;
-    Unbinder unbinder1;
     private View rootView = null;
     private Unbinder unbinder;
 
@@ -49,7 +48,6 @@ public class MessageFragment extends BaseFragment
         {
             parent.removeView(rootView);
         }
-        unbinder1 = ButterKnife.bind(this, rootView);
         return rootView;
     }
 
@@ -85,9 +83,14 @@ public class MessageFragment extends BaseFragment
     }
 
     @Override
-    public void onDestroyView()
+    public void onDestroy()
     {
-        super.onDestroyView();
-        unbinder1.unbind();
+        super.onDestroy();
+        if (null != unbinder)
+        {
+            unbinder.unbind();
+            unbinder = null;
+        }
     }
+
 }
