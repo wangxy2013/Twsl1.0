@@ -96,8 +96,16 @@ public class OrderFragment extends BaseFragment implements PullToRefreshBase.OnR
 
                 case REQUEST_FAIL:
                     ToastUtil.show(getActivity(), msg.obj.toString());
-                    mRecyclerView.setVisibility(View.GONE);
-                    llNoData.setVisibility(View.VISIBLE);
+                    if (orderInfoList.isEmpty())
+                    {
+                        mRecyclerView.setVisibility(View.GONE);
+                        llNoData.setVisibility(View.VISIBLE);
+                    }
+                    else
+                    {
+                        mRecyclerView.setVisibility(View.VISIBLE);
+                        llNoData.setVisibility(View.GONE);
+                    }
                     break;
 
 

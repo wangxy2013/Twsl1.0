@@ -66,9 +66,26 @@ public class OrderHolder extends RecyclerView.ViewHolder
             zc = "双早";
         }
 
+        int is_used = mOrderInfo.getIs_used();
+
+        if (is_used == 0)
+        {
+            mTypeTv.setText("待确认");
+            mTypeTv.setBackgroundResource(R.drawable.common_yellow_5dp);
+        }
+        else if (is_used == 1)
+        {
+            mTypeTv.setText("已接受");
+            mTypeTv.setBackgroundResource(R.drawable.common_green_5dp);
+        }
+        else
+        {
+            mTypeTv.setText("已拒绝");
+            mTypeTv.setBackgroundResource(R.drawable.common_gray_5dp);
+        }
+
 
         mHotelNameTv.setText(mOrderInfo.getMerchant());
-        mTypeTv.setText("￥" + mOrderInfo.getTotal_fee());
         mTitleTv.setText(mOrderInfo.getTitle() + "[" + zc + "]");
         mNameTv.setText(mOrderInfo.getName() + " " + mOrderInfo.getCheck_in());
         mCreateTimeTv.setText(mOrderInfo.getCreate_time());

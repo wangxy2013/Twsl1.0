@@ -76,6 +76,7 @@ public class OrderListFragment extends BaseFragment implements View.OnClickListe
     public void onResume()
     {
         super.onResume();
+        ((MainActivity) getActivity()).changeTabStatusColor(2);
     }
 
     @Override
@@ -101,7 +102,7 @@ public class OrderListFragment extends BaseFragment implements View.OnClickListe
     @Override
     protected void initViewData()
     {
-        ((MainActivity) getActivity()).changeTabStatusColor(2);
+
         tvCheck.setText("起 " + StringUtils.toMonthAndDay(s_date));
         tvLeave.setText("止 " + StringUtils.toMonthAndDay(e_date));
 
@@ -110,13 +111,14 @@ public class OrderListFragment extends BaseFragment implements View.OnClickListe
         LinearLayout.LayoutParams topViewParams = new LinearLayout.LayoutParams(widthPixels, APPUtils.getStatusBarHeight(getActivity()));
         mViewLayout.setLayoutParams(topViewParams);
         mViewLayout.setVisibility(View.VISIBLE);
-
+        s_date = "2018-05-07";
+        e_date="2018-06-07";
         MyViewPagerAdapter viewPagerAdapter = new MyViewPagerAdapter(getChildFragmentManager());
         viewPagerAdapter.addFragment(OrderFragment1.newInstance(keyword, s_date, e_date), "待处理");//添加Fragment
         viewPagerAdapter.addFragment(OrderFragment2.newInstance(keyword, s_date, e_date), "今日入住");
         viewPagerAdapter.addFragment(OrderFragment.newInstance(keyword, s_date, e_date), "全部订单");
         mViewPager.setAdapter(viewPagerAdapter);//设置适配器
-
+        mViewPager.setOffscreenPageLimit(2);
         mTabLayout.addTab(mTabLayout.newTab().setText("待处理"));//给TabLayout添加Tab
         mTabLayout.addTab(mTabLayout.newTab().setText("今日入住"));
         mTabLayout.addTab(mTabLayout.newTab().setText("全部订单"));
@@ -132,9 +134,9 @@ public class OrderListFragment extends BaseFragment implements View.OnClickListe
     }
 
     @Override
-    public void onDestroyView()
+    public void onDestroy()
     {
-        super.onDestroyView();
+        super.onDestroy();
         if (null != unbinder)
         {
             unbinder.unbind();

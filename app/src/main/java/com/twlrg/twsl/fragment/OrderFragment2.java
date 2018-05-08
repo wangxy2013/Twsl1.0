@@ -52,7 +52,7 @@ import butterknife.Unbinder;
 public class OrderFragment2 extends BaseFragment implements PullToRefreshBase.OnRefreshListener<RecyclerView>, IRequestListener
 {
     @BindView(R.id.btn_load)
-    Button                       btnLoad;
+    Button                    btnLoad;
     @BindView(R.id.ll_no_data)
     LinearLayout              llNoData;
     @BindView(R.id.pullToRefreshRecyclerView)
@@ -98,8 +98,16 @@ public class OrderFragment2 extends BaseFragment implements PullToRefreshBase.On
 
                 case REQUEST_FAIL:
                     ToastUtil.show(getActivity(), msg.obj.toString());
-                    mRecyclerView.setVisibility(View.GONE);
-                    llNoData.setVisibility(View.VISIBLE);
+                    if (orderInfoList.isEmpty())
+                    {
+                        mRecyclerView.setVisibility(View.GONE);
+                        llNoData.setVisibility(View.VISIBLE);
+                    }
+                    else
+                    {
+                        mRecyclerView.setVisibility(View.VISIBLE);
+                        llNoData.setVisibility(View.GONE);
+                    }
                     break;
 
 
@@ -151,11 +159,13 @@ public class OrderFragment2 extends BaseFragment implements PullToRefreshBase.On
 
 
     }
+
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
+    public void setUserVisibleHint(boolean isVisibleToUser)
+    {
         super.setUserVisibleHint(isVisibleToUser);
 
-        if(isVisibleToUser)
+        if (isVisibleToUser)
         {
             if (MyApplication.getInstance().isLogin())
             {
