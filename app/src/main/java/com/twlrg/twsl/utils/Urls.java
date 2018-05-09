@@ -130,6 +130,11 @@ public class Urls
         return BASE_URL + "order/used_status";
     }
 
+    //修改订单价格
+    public static String getSaveOrderPriceUrl()
+    {
+        return BASE_URL + "order/save_price";
+    }
 
     //选择销售
     public static String getSelectSaleUrl()

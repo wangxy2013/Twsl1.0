@@ -43,6 +43,10 @@ public class MyOnClickListener
         public abstract void onSubmit(String content);
     }
 
+    public interface OnCallBackListener
+    {
+        public abstract void onSubmit(int p,String content);
+    }
 
     public interface  OnQuestionSubmitListener
     {
@@ -50,9 +54,5 @@ public class MyOnClickListener
     }
 
 
-    public interface OnCallBackListener
-    {
-        public abstract void OnCallBack(String msgId);
-    }
 
 }

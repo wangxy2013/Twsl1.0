@@ -97,7 +97,7 @@ public class OrderFragment2 extends BaseFragment implements PullToRefreshBase.On
                     break;
 
                 case REQUEST_FAIL:
-                    ToastUtil.show(getActivity(), msg.obj.toString());
+                    //ToastUtil.show(getActivity(), msg.obj.toString());
                     if (orderInfoList.isEmpty())
                     {
                         mRecyclerView.setVisibility(View.GONE);

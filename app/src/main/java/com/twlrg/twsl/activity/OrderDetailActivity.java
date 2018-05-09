@@ -20,9 +20,12 @@ import com.twlrg.twsl.http.IRequestListener;
 import com.twlrg.twsl.json.OrderInfoHandler;
 import com.twlrg.twsl.json.OrderListHandler;
 import com.twlrg.twsl.json.ResultHandler;
+import com.twlrg.twsl.listener.MyOnClickListener;
 import com.twlrg.twsl.utils.APPUtils;
 import com.twlrg.twsl.utils.ConfigManager;
 import com.twlrg.twsl.utils.ConstantUtil;
+import com.twlrg.twsl.utils.DialogUtils;
+import com.twlrg.twsl.utils.LogUtil;
 import com.twlrg.twsl.utils.ToastUtil;
 import com.twlrg.twsl.utils.Urls;
 import com.twlrg.twsl.widget.AutoFitTextView;
@@ -101,16 +104,17 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
     private List<OrderInfo> mOrderInfoList = new ArrayList<>();
     private boolean isModifyPrice;
 
-    private static final int REQUEST_LOGIN_SUCCESS       = 0x01;
-    public static final  int REQUEST_FAIL                = 0x02;
-    private static final int GET_ORDER_DETAIL_SUCCESS    = 0x04;
-    private static final int CHANGE_ORDER_STATUS_SUCCESS = 0x03;
-
-    private static final String      GET_ORDER_INFO      = "get_order_info";
-    private static final String      GET_ORDER_DETAIL    = "get_order_detail";
-    private static final String      CHANGE_ORDER_STATUS = "CHANGE_ORDER_STATUS";
+    private static final int         REQUEST_LOGIN_SUCCESS       = 0x01;
+    public static final  int         REQUEST_FAIL                = 0x02;
+    private static final int         GET_ORDER_DETAIL_SUCCESS    = 0x04;
+    private static final int         CHANGE_ORDER_STATUS_SUCCESS = 0x03;
+    private static final int         SAVE_ORDER_PRICE_SUCCESS    = 0x05;
+    private static final String      GET_ORDER_INFO              = "get_order_info";
+    private static final String      GET_ORDER_DETAIL            = "get_order_detail";
+    private static final String      CHANGE_ORDER_STATUS         = "CHANGE_ORDER_STATUS";
+    private static final String      SAVE_ORDER_PRICE            = "SAVE_ORDER_PRICE";
     @SuppressLint("HandlerLeak")
-    private              BaseHandler mHandler            = new BaseHandler(this)
+    private              BaseHandler mHandler                    = new BaseHandler(this)
     {
         @Override
         public void handleMessage(Message msg)
@@ -143,11 +147,7 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
                         if (mPayment_trade_status == 1)
                         {
                             payStatus = "已支付";
-                            tvModifyPrice.setVisibility(View.GONE);
-                        }
-                        else
-                        {
-                            tvModifyPrice.setVisibility(View.VISIBLE);
+
                         }
 
                         tvPayStatus.setText(payStatus + ",共计RMB: " + mOrderInfo.getTotal_fee() + "(包含服务费)");
@@ -157,6 +157,8 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
                         tvRequirement.setText(mOrderInfo.getRemark());
                         is_used = mOrderInfo.getIs_used();
 
+
+                        tvModifyPrice.setVisibility(View.GONE);
                         if (is_used == 0)
                         {
                             tvIsUsed.setText("待确认");
@@ -167,6 +169,7 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
                             {
                                 btnAccept.setVisibility(View.GONE);
                                 btnRefuse.setVisibility(View.VISIBLE);
+                                tvModifyPrice.setVisibility(View.VISIBLE);
                             }
                             else
                             {
@@ -247,6 +250,12 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
                     loadData();
                     break;
 
+                case SAVE_ORDER_PRICE_SUCCESS:
+                    ToastUtil.show(OrderDetailActivity.this, "操作成功");
+                    mOrderInfoList.clear();
+                    loadData();
+                    break;
+
             }
         }
     };
@@ -285,7 +294,16 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
         mRecyclerView.setLayoutManager(new FullyLinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new EmptyDecoration(this, ""));
 
-        mOrderPriceAdapter = new OrderPriceAdapter(mOrderInfoList);
+        mOrderPriceAdapter = new OrderPriceAdapter(OrderDetailActivity.this, mOrderInfoList, new MyOnClickListener.OnCallBackListener()
+        {
+            @Override
+            public void onSubmit(int p, String content)
+            {
+                mOrderInfoList.get(p).setPrice(content);
+                mOrderPriceAdapter.notifyDataSetChanged();
+
+            }
+        });
         mRecyclerView.setAdapter(mOrderPriceAdapter);
 
     }
@@ -304,6 +322,7 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
     protected void onResume()
     {
         super.onResume();
+
         loadData();
     }
 
@@ -343,14 +362,35 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
         {
             if (isModifyPrice)
             {
-                isModifyPrice = false;
-                tvModifyPrice.setText("修改价格");
-                for (int i = 0; i < mOrderInfoList.size(); i++)
+                DialogUtils.showToastDialog2Button(OrderDetailActivity.this, "确定修改价格？", new View.OnClickListener()
                 {
-                    mOrderInfoList.get(i).setPriceModify(isModifyPrice);
-                }
+                    @Override
+                    public void onClick(View v)
+                    {
+                        StringBuilder sb = new StringBuilder();
+                        for (int i = 0; i < mOrderInfoList.size(); i++)
+                        {
+                            sb.append(i + 1);
+                            sb.append(":");
+                            sb.append(mOrderInfoList.get(i).getPrice());
+                            sb.append(",");
+                        }
 
-                mOrderPriceAdapter.notifyDataSetChanged();
+                        LogUtil.e("TAG", "id_price--->" + sb.toString());
+                        showProgressDialog();
+                        Map<String, String> valuePairs = new HashMap<>();
+                        valuePairs.put("token", ConfigManager.instance().getToken());
+                        valuePairs.put("uid", ConfigManager.instance().getUserID());
+                        valuePairs.put("order_id", order_id);
+                        valuePairs.put("id_price", sb.toString().substring(0, sb.toString().length() - 1));
+
+                        DataRequest.instance().request(OrderDetailActivity.this, Urls.getSaveOrderPriceUrl(), OrderDetailActivity.this, HttpRequest.POST,
+                                SAVE_ORDER_PRICE, valuePairs,
+                                new ResultHandler());
+
+                    }
+                });
+
             }
             else
             {
@@ -447,6 +487,18 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
             if (ConstantUtil.RESULT_SUCCESS.equals(resultCode))
             {
                 mHandler.sendMessage(mHandler.obtainMessage(CHANGE_ORDER_STATUS_SUCCESS, obj));
+            }
+
+            else
+            {
+                mHandler.sendMessage(mHandler.obtainMessage(REQUEST_FAIL, resultMsg));
+            }
+        }
+        else if (SAVE_ORDER_PRICE.equals(action))
+        {
+            if (ConstantUtil.RESULT_SUCCESS.equals(resultCode))
+            {
+                mHandler.sendMessage(mHandler.obtainMessage(SAVE_ORDER_PRICE_SUCCESS, obj));
             }
 
             else
