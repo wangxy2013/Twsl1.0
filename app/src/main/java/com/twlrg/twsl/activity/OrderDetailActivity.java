@@ -300,7 +300,6 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
             public void onSubmit(int p, String content)
             {
                 mOrderInfoList.get(p).setPrice(content);
-                mOrderPriceAdapter.notifyDataSetChanged();
 
             }
         });
