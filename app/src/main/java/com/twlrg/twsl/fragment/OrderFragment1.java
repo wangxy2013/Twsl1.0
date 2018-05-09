@@ -164,10 +164,7 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
             mRefreshStatus = 0;
             getOrderList();
         }
-        else
-        {
-            startActivity(new Intent(getActivity(), LoginActivity.class));
-        }
+
 
     }
 

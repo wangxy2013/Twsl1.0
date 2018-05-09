@@ -67,8 +67,11 @@ public class OrderHolder extends RecyclerView.ViewHolder
         }
 
         int is_used = mOrderInfo.getIs_used();
+        int pay_status = Integer.parseInt(mOrderInfo.getPayment_trade_status());
 
-        if (is_used == 0)
+
+
+        if (is_used == 0 )
         {
             mTypeTv.setText("待确认");
             mTypeTv.setBackgroundResource(R.drawable.common_yellow_5dp);
@@ -78,12 +81,26 @@ public class OrderHolder extends RecyclerView.ViewHolder
             mTypeTv.setText("已接受");
             mTypeTv.setBackgroundResource(R.drawable.common_green_5dp);
         }
-        else
+        else if (is_used == 2)
         {
             mTypeTv.setText("已拒绝");
             mTypeTv.setBackgroundResource(R.drawable.common_gray_5dp);
         }
-
+        else if (is_used == 3)
+        {
+            mTypeTv.setText("待取消");
+            mTypeTv.setBackgroundResource(R.drawable.common_red_5dp);
+        }
+        else if (is_used == 4)
+        {
+            mTypeTv.setText("已取消");
+            mTypeTv.setBackgroundResource(R.drawable.common_gray_5dp);
+        }
+        else if (is_used == 5)
+        {
+            mTypeTv.setText("拒绝取消");
+            mTypeTv.setBackgroundResource(R.drawable.common_violet_5dp);
+        }
 
         mHotelNameTv.setText(mOrderInfo.getMerchant());
         mTitleTv.setText(mOrderInfo.getTitle() + "[" + zc + "]");

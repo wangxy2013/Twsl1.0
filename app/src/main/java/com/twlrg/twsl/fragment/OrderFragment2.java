@@ -156,30 +156,16 @@ public class OrderFragment2 extends BaseFragment implements PullToRefreshBase.On
     public void onResume()
     {
         super.onResume();
-
-
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser)
-    {
-        super.setUserVisibleHint(isVisibleToUser);
-
-        if (isVisibleToUser)
+        if (MyApplication.getInstance().isLogin())
         {
-            if (MyApplication.getInstance().isLogin())
-            {
-                orderInfoList.clear();
-                pn = 1;
-                mRefreshStatus = 0;
-                getOrderList();
-            }
-            else
-            {
-                startActivity(new Intent(getActivity(), LoginActivity.class));
-            }
+            orderInfoList.clear();
+            pn = 1;
+            mRefreshStatus = 0;
+            getOrderList();
         }
+
     }
+
 
     @Override
     protected void initData()

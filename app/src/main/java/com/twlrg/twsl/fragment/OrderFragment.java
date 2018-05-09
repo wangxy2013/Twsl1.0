@@ -23,6 +23,7 @@ import com.twlrg.twsl.http.HttpRequest;
 import com.twlrg.twsl.http.IRequestListener;
 import com.twlrg.twsl.json.OrderListHandler;
 import com.twlrg.twsl.listener.MyItemClickListener;
+import com.twlrg.twsl.utils.APPUtils;
 import com.twlrg.twsl.utils.ConfigManager;
 import com.twlrg.twsl.utils.ConstantUtil;
 import com.twlrg.twsl.utils.ToastUtil;
@@ -154,29 +155,16 @@ public class OrderFragment extends BaseFragment implements PullToRefreshBase.OnR
     public void onResume()
     {
         super.onResume();
-
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser)
-    {
-        super.setUserVisibleHint(isVisibleToUser);
-
-        if (isVisibleToUser)
+        if (MyApplication.getInstance().isLogin())
         {
-            if (MyApplication.getInstance().isLogin())
-            {
-                orderInfoList.clear();
-                pn = 1;
-                mRefreshStatus = 0;
-                getOrderList();
-            }
-            else
-            {
-                startActivity(new Intent(getActivity(), LoginActivity.class));
-            }
+            orderInfoList.clear();
+            pn = 1;
+            mRefreshStatus = 0;
+            getOrderList();
         }
     }
+
+
 
     @Override
     protected void initData()

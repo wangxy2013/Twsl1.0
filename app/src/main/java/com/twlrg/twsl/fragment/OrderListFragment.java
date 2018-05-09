@@ -1,5 +1,6 @@
 package com.twlrg.twsl.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -10,7 +11,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.twlrg.twsl.MyApplication;
 import com.twlrg.twsl.R;
+import com.twlrg.twsl.activity.LoginActivity;
 import com.twlrg.twsl.activity.MainActivity;
 import com.twlrg.twsl.adapter.MyViewPagerAdapter;
 import com.twlrg.twsl.utils.APPUtils;
@@ -77,6 +80,10 @@ public class OrderListFragment extends BaseFragment implements View.OnClickListe
     {
         super.onResume();
         ((MainActivity) getActivity()).changeTabStatusColor(2);
+        if (!MyApplication.getInstance().isLogin())
+        {
+            startActivity(new Intent(getActivity(), LoginActivity.class));
+        }
     }
 
     @Override
@@ -112,7 +119,7 @@ public class OrderListFragment extends BaseFragment implements View.OnClickListe
         mViewLayout.setLayoutParams(topViewParams);
         mViewLayout.setVisibility(View.VISIBLE);
         s_date = "2018-05-07";
-        e_date="2018-06-07";
+        e_date = "2018-06-07";
         MyViewPagerAdapter viewPagerAdapter = new MyViewPagerAdapter(getChildFragmentManager());
         viewPagerAdapter.addFragment(OrderFragment1.newInstance(keyword, s_date, e_date), "待处理");//添加Fragment
         viewPagerAdapter.addFragment(OrderFragment2.newInstance(keyword, s_date, e_date), "今日入住");
@@ -132,6 +139,7 @@ public class OrderListFragment extends BaseFragment implements View.OnClickListe
     {
 
     }
+
 
     @Override
     public void onDestroy()

@@ -124,6 +124,12 @@ public class Urls
         return BASE_URL + "order/detailed";
     }
 
+    //修改订单状态
+    public static String getChangeOrderStatusUrl()
+    {
+        return BASE_URL + "order/used_status";
+    }
+
 
     //选择销售
     public static String getSelectSaleUrl()
