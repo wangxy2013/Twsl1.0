@@ -175,6 +175,18 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
 
+        <activity
+            android:name=".activity.RoomStatusActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
+
+
+
+
+
+
+
 
         <activity
             android:name=".wxapi.WXPayEntryActivity"

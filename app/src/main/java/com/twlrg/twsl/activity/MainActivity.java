@@ -15,6 +15,7 @@ import com.twlrg.twsl.fragment.MessageFragment;
 import com.twlrg.twsl.fragment.OrderFragment;
 import com.twlrg.twsl.fragment.OrderListFragment;
 import com.twlrg.twsl.fragment.UserCenterFragment;
+import com.twlrg.twsl.fragment.UserCenterFragment1;
 
 import butterknife.BindView;
 
@@ -29,9 +30,8 @@ public class MainActivity extends BaseActivity
             R.drawable.ic_home_selector, R.drawable.ic_message_selector,
             R.drawable.ic_order_selector, R.drawable.ic_user_center_selector};
 
-    UserCenterFragment mUserCenterFragment = new UserCenterFragment();
 
-    private Class fragmentArray[] = {HomeFragment.class, MessageFragment.class, OrderListFragment.class, mUserCenterFragment.getClass()};
+    private Class fragmentArray[] = {HomeFragment.class, MessageFragment.class, OrderListFragment.class, UserCenterFragment1.class};
 
 
     @Override
@@ -99,11 +99,5 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        super.onActivityResult(requestCode, resultCode, data);
-        mUserCenterFragment.onActivityResult(requestCode, resultCode, data);
-    }
 
 }

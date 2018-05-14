@@ -1,5 +1,6 @@
 package com.twlrg.twsl.activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
@@ -66,6 +67,7 @@ public class CommentListActivity extends BaseActivity implements PullToRefreshBa
     private static final int REQUEST_SUCCESS = 0x01;
     private static final int REQUEST_FAIL    = 0x02;
 
+    @SuppressLint("HandlerLeak")
     private final BaseHandler mHandler = new BaseHandler(CommentListActivity.this)
     {
         @Override
