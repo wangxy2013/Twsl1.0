@@ -1,10 +1,7 @@
 package com.twlrg.twsl.fragment;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,23 +9,11 @@ import android.widget.LinearLayout;
 
 import com.twlrg.twsl.MyApplication;
 import com.twlrg.twsl.R;
-import com.twlrg.twsl.activity.BaseHandler;
 import com.twlrg.twsl.activity.LocationActivity;
-import com.twlrg.twsl.activity.LoginActivity;
 import com.twlrg.twsl.activity.MainActivity;
-import com.twlrg.twsl.activity.RoomStatusActivity;
-import com.twlrg.twsl.http.DataRequest;
-import com.twlrg.twsl.http.HttpRequest;
-import com.twlrg.twsl.http.IRequestListener;
-import com.twlrg.twsl.json.ResultHandler;
+import com.twlrg.twsl.activity.RoomPriceListActivity;
+import com.twlrg.twsl.activity.RoomStatusListActivity;
 import com.twlrg.twsl.utils.APPUtils;
-import com.twlrg.twsl.utils.ConfigManager;
-import com.twlrg.twsl.utils.ConstantUtil;
-import com.twlrg.twsl.utils.ToastUtil;
-import com.twlrg.twsl.utils.Urls;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -159,12 +144,12 @@ public class UserCenterFragment1 extends BaseFragment implements View.OnClickLis
         //房态维护
         if (v == llFtwh)
         {
-            gotoActivity(RoomStatusActivity.class);
+            gotoActivity(RoomStatusListActivity.class);
         }
         //房价维护
         else if (v == llFjwh)
         {
-
+            gotoActivity(RoomPriceListActivity.class);
         }
 
         else if (v == llJddp)

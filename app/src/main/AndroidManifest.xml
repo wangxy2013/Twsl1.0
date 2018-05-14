@@ -176,13 +176,28 @@
             android:windowSoftInputMode="stateHidden"/>
 
         <activity
-            android:name=".activity.RoomStatusActivity"
+            android:name=".activity.RoomStatusListActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
 
+        <activity
+            android:name=".activity.RoomStatusDetailActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
 
+        <activity
+            android:name=".activity.RoomPriceListActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
 
+        <activity
+            android:name=".activity.RoomPriceDetailActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
 
 
 

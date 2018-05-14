@@ -9,18 +9,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.twlrg.twsl.R;
-import com.twlrg.twsl.adapter.RoomStatusAdapter;
+import com.twlrg.twsl.adapter.RoomPriceMonthAdapter;
 import com.twlrg.twsl.adapter.RoomStatusMonthAdapter;
 import com.twlrg.twsl.entity.RoomDayInfo;
-import com.twlrg.twsl.entity.RoomInfo;
 import com.twlrg.twsl.entity.RoomMonthInfo;
-import com.twlrg.twsl.listener.MyItemClickListener;
 import com.twlrg.twsl.listener.MyOnClickListener;
 import com.twlrg.twsl.utils.APPUtils;
 import com.twlrg.twsl.widget.AutoFitTextView;
-import com.twlrg.twsl.widget.DividerDecoration;
 import com.twlrg.twsl.widget.EmptyDecoration;
-import com.twlrg.twsl.widget.calendar.DayTimeEntity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,7 +29,7 @@ import butterknife.BindView;
  * 邮箱：wangxianyun1@163.com
  * 描述：房状维护
  */
-public class RoomStatusDetailActivity extends BaseActivity
+public class RoomPriceDetailActivity extends BaseActivity
 {
     @BindView(R.id.topView)
     View            topView;
@@ -44,7 +40,7 @@ public class RoomStatusDetailActivity extends BaseActivity
     @BindView(R.id.recyclerView)
     RecyclerView    mRecyclerView;
 
-    private RoomStatusMonthAdapter mRoomStatusMonthAdapter;
+    private RoomPriceMonthAdapter mRoomPriceMonthAdapter;
 
 
     private List<RoomMonthInfo> monthInfoList = new ArrayList<>();
@@ -123,7 +119,7 @@ public class RoomStatusDetailActivity extends BaseActivity
     @Override
     protected void initViews(Bundle savedInstanceState)
     {
-        setContentView(R.layout.activity_room_status_detail);
+        setContentView(R.layout.activity_room_price_detail);
         setTranslucentStatus();
     }
 
@@ -141,47 +137,18 @@ public class RoomStatusDetailActivity extends BaseActivity
         topView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, APPUtils.getStatusBarHeight(this)));
         tvTitle.setText("房态维护");
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(RoomStatusDetailActivity.this, LinearLayoutManager.VERTICAL, false));
-        mRecyclerView.addItemDecoration(new EmptyDecoration(RoomStatusDetailActivity.this, ""));
-        mRoomStatusMonthAdapter = new RoomStatusMonthAdapter(monthInfoList, RoomStatusDetailActivity.this, new MyOnClickListener.OnClickCallBackListener()
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(RoomPriceDetailActivity.this, LinearLayoutManager.VERTICAL, false));
+        mRecyclerView.addItemDecoration(new EmptyDecoration(RoomPriceDetailActivity.this, ""));
+        mRoomPriceMonthAdapter = new RoomPriceMonthAdapter(monthInfoList, RoomPriceDetailActivity.this, new MyOnClickListener.OnClickCallBackListener()
         {
             @Override
             public void onSubmit(int p, int n)
             {
-//                for (int i = 0; i < monthInfoList.size(); i++)
-//                {
-//
-//                    if (i == p)
-//                    {
-//                        for (int j = 0; j < monthInfoList.get(i).getRoomDayInfoList().size(); j++)
-//                        {
-//                            if (j == n)
-//                            {
-//                                if (monthInfoList.get(i).getRoomDayInfoList().get(j).getStatus() == 1)
-//                                {
-//                                    monthInfoList.get(i).getRoomDayInfoList().get(j).setStatus(0);
-//                                }
-//                                else
-//                                {
-//                                    monthInfoList.get(i).getRoomDayInfoList().get(j).setStatus(1);
-//                                }
-//                            }
-//                        }
-//                    }
-
-                if (monthInfoList.get(p).getRoomDayInfoList().get(n).getStatus() == 1)
-                {
-                    monthInfoList.get(p).getRoomDayInfoList().get(n).setStatus(0);
-                }
-                else
-                {
-                    monthInfoList.get(p).getRoomDayInfoList().get(n).setStatus(1);
-                }
-                mRoomStatusMonthAdapter.notifyDataSetChanged();
+                mRoomPriceMonthAdapter.notifyDataSetChanged();
             }
         });
 
-        mRecyclerView.setAdapter(mRoomStatusMonthAdapter);
+        mRecyclerView.setAdapter(mRoomPriceMonthAdapter);
     }
 
 

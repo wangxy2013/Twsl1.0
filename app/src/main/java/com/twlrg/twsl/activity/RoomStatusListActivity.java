@@ -1,5 +1,6 @@
 package com.twlrg.twsl.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,7 +27,7 @@ import butterknife.BindView;
  * 邮箱：wangxianyun1@163.com
  * 描述：房状维护
  */
-public class RoomStatusActivity extends BaseActivity
+public class RoomStatusListActivity extends BaseActivity
 {
     @BindView(R.id.topView)
     View            topView;
@@ -71,14 +72,14 @@ public class RoomStatusActivity extends BaseActivity
         topView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, APPUtils.getStatusBarHeight(this)));
         tvTitle.setText("房态维护");
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(RoomStatusActivity.this, LinearLayoutManager.VERTICAL, false));
-        mRecyclerView.addItemDecoration(new DividerDecoration(RoomStatusActivity.this));
-        mRoomStatusAdapter = new RoomStatusAdapter(roomInfoList, RoomStatusActivity.this, new MyItemClickListener()
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(RoomStatusListActivity.this, LinearLayoutManager.VERTICAL, false));
+        mRecyclerView.addItemDecoration(new DividerDecoration(RoomStatusListActivity.this));
+        mRoomStatusAdapter = new RoomStatusAdapter(roomInfoList, RoomStatusListActivity.this, new MyItemClickListener()
         {
             @Override
             public void onItemClick(View view, int position)
             {
-
+                startActivity(new Intent(RoomStatusListActivity.this, RoomStatusDetailActivity.class));
             }
         });
 
