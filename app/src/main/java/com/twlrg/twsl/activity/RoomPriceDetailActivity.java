@@ -13,8 +13,10 @@ import com.twlrg.twsl.adapter.RoomPriceMonthAdapter;
 import com.twlrg.twsl.adapter.RoomStatusMonthAdapter;
 import com.twlrg.twsl.entity.RoomDayInfo;
 import com.twlrg.twsl.entity.RoomMonthInfo;
+import com.twlrg.twsl.listener.MyItemClickListener;
 import com.twlrg.twsl.listener.MyOnClickListener;
 import com.twlrg.twsl.utils.APPUtils;
+import com.twlrg.twsl.utils.DialogUtils;
 import com.twlrg.twsl.widget.AutoFitTextView;
 import com.twlrg.twsl.widget.EmptyDecoration;
 
@@ -135,7 +137,7 @@ public class RoomPriceDetailActivity extends BaseActivity
         setStatusBarTextDeep(true);
         topView.setVisibility(View.VISIBLE);
         topView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, APPUtils.getStatusBarHeight(this)));
-        tvTitle.setText("房态维护");
+        tvTitle.setText("房价维护");
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(RoomPriceDetailActivity.this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.addItemDecoration(new EmptyDecoration(RoomPriceDetailActivity.this, ""));
@@ -144,7 +146,16 @@ public class RoomPriceDetailActivity extends BaseActivity
             @Override
             public void onSubmit(int p, int n)
             {
-                mRoomPriceMonthAdapter.notifyDataSetChanged();
+
+                DialogUtils.showRoomPriceDialog(RoomPriceDetailActivity.this, new MyItemClickListener()
+                {
+                    @Override
+                    public void onItemClick(View view, int position)
+                    {
+
+                    }
+                });
+
             }
         });
 

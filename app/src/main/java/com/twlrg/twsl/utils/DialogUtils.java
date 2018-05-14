@@ -419,5 +419,34 @@ public class DialogUtils
         dialog.show();
     }
 
+    /**
+     * @return
+     */
+    public static void showRoomPriceDialog(final Context mContext, final MyItemClickListener listener)
+    {
+        final Dialog dialog = new Dialog(mContext);
+        dialog.setCancelable(true);
+        View v = LayoutInflater.from(mContext).inflate(R.layout.dialog_modify_room_price, null);
+        dialog.setContentView(v);
+
+        v.findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                listener.onItemClick(v, 0);
+                dialog.dismiss();
+            }
+        });
+
+        //Dialog部分
+        Window mWindow = dialog.getWindow();
+        WindowManager.LayoutParams lp = mWindow.getAttributes();
+        lp.gravity = Gravity.BOTTOM;
+        mWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        mWindow.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        mWindow.setAttributes(lp);
+        dialog.show();
+    }
 
 }
