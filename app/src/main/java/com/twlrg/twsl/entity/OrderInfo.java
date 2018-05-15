@@ -63,7 +63,7 @@ public class OrderInfo
     private String sale_mobile;
 
     private  boolean priceModify;
-
+    public OrderInfo(){}
     public OrderInfo(JSONObject obj)
     {
         this.status = obj.optString("status");

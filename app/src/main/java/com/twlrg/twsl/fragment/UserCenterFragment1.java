@@ -9,8 +9,12 @@ import android.widget.LinearLayout;
 
 import com.twlrg.twsl.MyApplication;
 import com.twlrg.twsl.R;
+import com.twlrg.twsl.activity.BillListActivity;
+import com.twlrg.twsl.activity.ConferenceManageActivity;
+import com.twlrg.twsl.activity.FacilitiesActivity;
 import com.twlrg.twsl.activity.LocationActivity;
 import com.twlrg.twsl.activity.MainActivity;
+import com.twlrg.twsl.activity.RoomManageActivity;
 import com.twlrg.twsl.activity.RoomPriceListActivity;
 import com.twlrg.twsl.activity.RoomStatusListActivity;
 import com.twlrg.twsl.utils.APPUtils;
@@ -158,14 +162,15 @@ public class UserCenterFragment1 extends BaseFragment implements View.OnClickLis
         }
         else if (v == llZdzf)
         {
-
+            gotoActivity(BillListActivity.class);
         }
         else if (v == llKfgl)
         {
-
+            gotoActivity(RoomManageActivity.class);
         }
         else if (v == llHysgl)
         {
+            gotoActivity(ConferenceManageActivity.class);
 
         }
         else if (v == llCtgl)
@@ -178,6 +183,7 @@ public class UserCenterFragment1 extends BaseFragment implements View.OnClickLis
         }
         else if (v == llJdss)
         {
+            gotoActivity(FacilitiesActivity.class);
 
         }
         else if (v == llJdxx)

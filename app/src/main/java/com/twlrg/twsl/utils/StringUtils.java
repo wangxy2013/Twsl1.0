@@ -931,7 +931,7 @@ public class StringUtils
     public static int differentDaysByMillisecond(String time1, String time2)
     {
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date date2 = null;
         Date date1 = null;
         try

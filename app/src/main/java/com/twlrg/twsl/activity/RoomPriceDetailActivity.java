@@ -1,5 +1,7 @@
 package com.twlrg.twsl.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -7,16 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.twlrg.twsl.R;
 import com.twlrg.twsl.adapter.RoomPriceMonthAdapter;
-import com.twlrg.twsl.adapter.RoomStatusMonthAdapter;
 import com.twlrg.twsl.entity.RoomDayInfo;
 import com.twlrg.twsl.entity.RoomMonthInfo;
-import com.twlrg.twsl.listener.MyItemClickListener;
 import com.twlrg.twsl.listener.MyOnClickListener;
 import com.twlrg.twsl.utils.APPUtils;
 import com.twlrg.twsl.utils.DialogUtils;
+import com.twlrg.twsl.utils.StringUtils;
 import com.twlrg.twsl.widget.AutoFitTextView;
 import com.twlrg.twsl.widget.EmptyDecoration;
 
@@ -41,11 +43,15 @@ public class RoomPriceDetailActivity extends BaseActivity
     AutoFitTextView tvTitle;
     @BindView(R.id.recyclerView)
     RecyclerView    mRecyclerView;
+    @BindView(R.id.tv_submit)
+    TextView        tvSubmit;
+
+
+    private String mStartDate, mEndDate;
 
     private RoomPriceMonthAdapter mRoomPriceMonthAdapter;
-
-
-    private List<RoomMonthInfo> monthInfoList = new ArrayList<>();
+    private              List<RoomMonthInfo> monthInfoList = new ArrayList<>();
+    private static final int                 GET_DATE_CODE = 0x99;
 
     @Override
     protected void initData()
@@ -129,6 +135,7 @@ public class RoomPriceDetailActivity extends BaseActivity
     protected void initEvent()
     {
         ivBack.setOnClickListener(this);
+        tvSubmit.setOnClickListener(this);
     }
 
     @Override
@@ -139,6 +146,9 @@ public class RoomPriceDetailActivity extends BaseActivity
         topView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, APPUtils.getStatusBarHeight(this)));
         tvTitle.setText("房价维护");
 
+        tvSubmit.setText("批量修改");
+        tvSubmit.setVisibility(View.VISIBLE);
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(RoomPriceDetailActivity.this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.addItemDecoration(new EmptyDecoration(RoomPriceDetailActivity.this, ""));
         mRoomPriceMonthAdapter = new RoomPriceMonthAdapter(monthInfoList, RoomPriceDetailActivity.this, new MyOnClickListener.OnClickCallBackListener()
@@ -146,8 +156,10 @@ public class RoomPriceDetailActivity extends BaseActivity
             @Override
             public void onSubmit(int p, int n)
             {
-                int day = monthInfoList.get(p).getRoomDayInfoList().get(n).getDay();
-                showModifyPriceDialog(String.valueOf(day), String.valueOf(day));
+                RoomDayInfo mRoomDayInfo = monthInfoList.get(p).getRoomDayInfoList().get(n);
+
+                String day = mRoomDayInfo.getYear() + "-" + mRoomDayInfo.getMonth() + "-" + mRoomDayInfo.getDay();
+                showModifyPriceDialog(day, day);
             }
         });
 
@@ -157,6 +169,8 @@ public class RoomPriceDetailActivity extends BaseActivity
 
     private void showModifyPriceDialog(String startTime, String endTime)
     {
+        mStartDate = startTime;
+        mEndDate = endTime;
         DialogUtils.showRoomPriceDialog(startTime, endTime, RoomPriceDetailActivity.this, new MyOnClickListener.OnSubmitListener()
         {
             @Override
@@ -176,5 +190,32 @@ public class RoomPriceDetailActivity extends BaseActivity
         {
             finish();
         }
+        else if (v == tvSubmit)
+        {
+            startActivityForResult(new Intent(RoomPriceDetailActivity.this, HotelTimeActivity.class), GET_DATE_CODE);
+        }
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GET_DATE_CODE)
+        {
+            if (resultCode == Activity.RESULT_OK && null != data)
+            {
+                mStartDate = data.getStringExtra("CHEK_IN");
+                mEndDate = data.getStringExtra("CHEK_OUT");
+
+                if (!StringUtils.stringIsEmpty(mStartDate) && !StringUtils.stringIsEmpty(mEndDate))
+                {
+
+                    showModifyPriceDialog(mStartDate, mEndDate);
+                }
+            }
+
+
+        }
+    }
+
 }
