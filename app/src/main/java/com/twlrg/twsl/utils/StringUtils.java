@@ -148,12 +148,12 @@ public class StringUtils
 
 
     /**
-     *
      * 描述:获取下一个月.
      *
      * @return
      */
-    public static String getNextMonth() {
+    public static String getNextMonth()
+    {
         Calendar cal = Calendar.getInstance();
         cal.add(cal.MONTH, 1);
         SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd");
@@ -920,6 +920,31 @@ public class StringUtils
         return time.split("-");
 
 
+    }
+
+
+    /**
+     * 通过时间秒毫秒数判断两个时间的间隔
+     *
+     * @return
+     */
+    public static int differentDaysByMillisecond(String time1, String time2)
+    {
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date2 = null;
+        Date date1 = null;
+        try
+        {
+            date1 = format.parse(time1);
+            date2 = format.parse(time2);
+        } catch (ParseException e)
+        {
+            e.printStackTrace();
+        }
+
+        int days = (int) ((date2.getTime() - date1.getTime()) / (1000 * 3600 * 24));
+        return days;
     }
 
 }

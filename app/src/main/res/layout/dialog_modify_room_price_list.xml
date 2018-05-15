@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:background="@color/white"
               android:orientation="vertical"
     >
 
@@ -28,7 +29,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/blueC"
+            android:background="@color/blueB"
             android:padding="@dimen/dm_10"
             android:text="2018-03-03"
             android:textColor="@color/blackA"
@@ -39,185 +40,158 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dm_1"
             android:layout_weight="1"
-            android:background="@color/blueC"
+            android:background="@color/blueB"
             android:padding="@dimen/dm_10"
             android:text="2018-03-03"
             android:textColor="@color/blackA"
             android:textSize="@dimen/t14"/>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/ll_week"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/blueB"
+        android:layout_marginTop="@dimen/dm_10"
+        android:background="@color/white"
         android:orientation="horizontal"
-        android:paddingBottom="20dp"
-        android:paddingTop="20dp"
         >
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="日"
-            android:visibility="invisible"
-            android:textStyle="bold"
-            />
 
         <TextView
+            android:id="@+id/tv_week_1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dm_0.5"
             android:layout_weight="1"
+            android:background="@drawable/room_status_selector"
             android:gravity="center"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
             android:text="日"
             android:textStyle="bold"
             />
 
         <TextView
+            android:id="@+id/tv_week_2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dm_0.5"
             android:layout_weight="1"
+            android:background="@drawable/room_status_selector"
             android:gravity="center"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
             android:text="一"
             android:textStyle="bold"
             />
         <TextView
+            android:id="@+id/tv_week_3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dm_0.5"
             android:layout_weight="1"
+            android:background="@drawable/room_status_selector"
             android:gravity="center"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
             android:text="二"
             android:textStyle="bold"
             />
         <TextView
+            android:id="@+id/tv_week_4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dm_0.5"
             android:layout_weight="1"
+            android:background="@drawable/room_status_selector"
             android:gravity="center"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
             android:text="三"
             android:textStyle="bold"
             />
         <TextView
+            android:id="@+id/tv_week_5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dm_0.5"
             android:layout_weight="1"
+            android:background="@drawable/room_status_selector"
             android:gravity="center"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
             android:text="四"
             android:textStyle="bold"
             />
         <TextView
+            android:id="@+id/tv_week_6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dm_0.5"
             android:layout_weight="1"
+            android:background="@drawable/room_status_selector"
             android:gravity="center"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
             android:text="五"
             android:textStyle="bold"
 
             />
         <TextView
+            android:id="@+id/tv_week_7"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dm_0.5"
             android:layout_weight="1"
+            android:background="@drawable/room_status_selector"
             android:gravity="center"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
             android:text="六"
             android:textStyle="bold"
             />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/dm_10">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="无早" android:textSize="@dimen/t14"/>
+        <EditText
+            android:id="@+id/et_wz"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:background="@drawable/black_frame_0dp"
+            android:hint="请输入价格"
+            android:inputType="number"
+            android:padding="@dimen/dm_5"
+            android:textSize="@dimen/t14"
+            />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp">
+        android:padding="@dimen/dm_10">
 
         <TextView
-            android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="无早"
-            android:textSize="@dimen/t14"/>
+            android:layout_weight="3"
+            android:text="单早" android:textSize="@dimen/t14"/>
         <EditText
-            android:id="@+id/et_wz_7"
+            android:id="@+id/et_dz"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dm_2"
-            android:layout_weight="1"
+            android:layout_weight="7"
             android:background="@drawable/black_frame_0dp"
-            android:hint="0"
-            android:inputType="number"
-            android:padding="@dimen/dm_5"
-            android:textSize="@dimen/t14"
-            />
-        <EditText
-            android:id="@+id/et_wz_1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dm_2"
-            android:layout_weight="1"
-            android:background="@drawable/black_frame_0dp"
-            android:hint="0"
-            android:inputType="number"
-            android:padding="@dimen/dm_5"
-            android:textSize="@dimen/t14"
-            />
-        <EditText
-            android:id="@+id/et_wz_2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dm_2"
-            android:layout_weight="1"
-            android:background="@drawable/black_frame_0dp"
-            android:hint="0"
-            android:inputType="number"
-            android:padding="@dimen/dm_5"
-            android:textSize="@dimen/t14"
-            />
-        <EditText
-            android:id="@+id/et_wz_3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dm_2"
-            android:layout_weight="1"
-            android:background="@drawable/black_frame_0dp"
-            android:hint="0"
-            android:inputType="number"
-            android:padding="@dimen/dm_5"
-            android:textSize="@dimen/t14"
-            />
-        <EditText
-            android:id="@+id/et_wz_4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dm_2"
-            android:layout_weight="1"
-            android:background="@drawable/black_frame_0dp"
-            android:hint="0"
-            android:inputType="number"
-            android:padding="@dimen/dm_5"
-            android:textSize="@dimen/t14"
-            />
-        <EditText
-            android:id="@+id/et_wz_5"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dm_2"
-            android:layout_weight="1"
-            android:background="@drawable/black_frame_0dp"
-            android:hint="0"
-            android:inputType="number"
-            android:padding="@dimen/dm_5"
-            android:textSize="@dimen/t14"
-            />
-        <EditText
-            android:id="@+id/et_wz_6"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dm_2"
-            android:layout_weight="1"
-            android:background="@drawable/black_frame_0dp"
-            android:hint="0"
+            android:hint="请输入价格"
             android:inputType="number"
             android:padding="@dimen/dm_5"
             android:textSize="@dimen/t14"
@@ -227,195 +201,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp">
+        android:padding="@dimen/dm_10">
 
         <TextView
             android:layout_width="0dp"
-            android:gravity="center"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="单早"
-            android:textSize="@dimen/t14"/>
-        <EditText
-            android:id="@+id/et_dz_7"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dm_2"
-            android:layout_weight="1"
-            android:background="@drawable/black_frame_0dp"
-            android:hint="0"
-            android:inputType="number"
-            android:padding="@dimen/dm_5"
-            android:textSize="@dimen/t14"
-            />
-        <EditText
-            android:id="@+id/et_dz_1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dm_2"
-            android:layout_weight="1"
-            android:background="@drawable/black_frame_0dp"
-            android:hint="0"
-            android:inputType="number"
-            android:padding="@dimen/dm_5"
-            android:textSize="@dimen/t14"
-            />
-        <EditText
-            android:id="@+id/et_dz_2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dm_2"
-            android:layout_weight="1"
-            android:background="@drawable/black_frame_0dp"
-            android:hint="0"
-            android:inputType="number"
-            android:padding="@dimen/dm_5"
-            android:textSize="@dimen/t14"
-            />
-        <EditText
-            android:id="@+id/et_dz_3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dm_2"
-            android:layout_weight="1"
-            android:background="@drawable/black_frame_0dp"
-            android:hint="0"
-            android:inputType="number"
-            android:padding="@dimen/dm_5"
-            android:textSize="@dimen/t14"
-            />
-        <EditText
-            android:id="@+id/et_dz_4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dm_2"
-            android:layout_weight="1"
-            android:background="@drawable/black_frame_0dp"
-            android:hint="0"
-            android:inputType="number"
-            android:padding="@dimen/dm_5"
-            android:textSize="@dimen/t14"
-            />
-        <EditText
-            android:id="@+id/et_dz_5"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dm_2"
-            android:layout_weight="1"
-            android:background="@drawable/black_frame_0dp"
-            android:hint="0"
-            android:inputType="number"
-            android:padding="@dimen/dm_5"
-            android:textSize="@dimen/t14"
-            />
-        <EditText
-            android:id="@+id/et_dz_6"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dm_2"
-            android:layout_weight="1"
-            android:background="@drawable/black_frame_0dp"
-            android:hint="0"
-            android:inputType="number"
-            android:padding="@dimen/dm_5"
-            android:textSize="@dimen/t14"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp">
-
-        <TextView
-            android:gravity="center"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:text="双早"
             android:textSize="@dimen/t14"/>
         <EditText
-            android:id="@+id/et_sz_7"
+            android:id="@+id/et_sz"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dm_2"
-            android:layout_weight="1"
+            android:layout_weight="7"
             android:background="@drawable/black_frame_0dp"
-            android:hint="9999"
-            android:inputType="number"
-            android:padding="@dimen/dm_5"
-            android:textSize="@dimen/t14"
-            />
-        <EditText
-            android:id="@+id/et_sz_1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dm_2"
-            android:layout_weight="1"
-            android:background="@drawable/black_frame_0dp"
-            android:hint="0"
-            android:inputType="number"
-            android:padding="@dimen/dm_5"
-            android:textSize="@dimen/t14"
-            />
-        <EditText
-            android:id="@+id/et_sz_2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dm_2"
-            android:layout_weight="1"
-            android:background="@drawable/black_frame_0dp"
-            android:hint="0"
-            android:inputType="number"
-            android:padding="@dimen/dm_5"
-            android:textSize="@dimen/t14"
-            />
-        <EditText
-            android:id="@+id/et_sz_3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dm_2"
-            android:layout_weight="1"
-            android:background="@drawable/black_frame_0dp"
-            android:hint="0"
-            android:inputType="number"
-            android:padding="@dimen/dm_5"
-            android:textSize="@dimen/t14"
-            />
-        <EditText
-            android:id="@+id/et_sz_4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dm_2"
-            android:layout_weight="1"
-            android:background="@drawable/black_frame_0dp"
-            android:hint="0"
-            android:inputType="number"
-            android:padding="@dimen/dm_5"
-            android:textSize="@dimen/t14"
-            />
-        <EditText
-            android:id="@+id/et_sz_5"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dm_2"
-            android:layout_weight="1"
-            android:background="@drawable/black_frame_0dp"
-            android:hint="0"
-            android:inputType="number"
-            android:padding="@dimen/dm_5"
-            android:textSize="@dimen/t14"
-            />
-        <EditText
-            android:id="@+id/et_sz_6"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dm_2"
-            android:layout_weight="1"
-            android:background="@drawable/black_frame_0dp"
-            android:hint="0"
+            android:hint="请输入价格"
             android:inputType="number"
             android:padding="@dimen/dm_5"
             android:textSize="@dimen/t14"

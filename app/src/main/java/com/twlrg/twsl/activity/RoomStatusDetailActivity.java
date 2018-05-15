@@ -148,26 +148,7 @@ public class RoomStatusDetailActivity extends BaseActivity
             @Override
             public void onSubmit(int p, int n)
             {
-//                for (int i = 0; i < monthInfoList.size(); i++)
-//                {
-//
-//                    if (i == p)
-//                    {
-//                        for (int j = 0; j < monthInfoList.get(i).getRoomDayInfoList().size(); j++)
-//                        {
-//                            if (j == n)
-//                            {
-//                                if (monthInfoList.get(i).getRoomDayInfoList().get(j).getStatus() == 1)
-//                                {
-//                                    monthInfoList.get(i).getRoomDayInfoList().get(j).setStatus(0);
-//                                }
-//                                else
-//                                {
-//                                    monthInfoList.get(i).getRoomDayInfoList().get(j).setStatus(1);
-//                                }
-//                            }
-//                        }
-//                    }
+
 
                 if (monthInfoList.get(p).getRoomDayInfoList().get(n).getStatus() == 1)
                 {

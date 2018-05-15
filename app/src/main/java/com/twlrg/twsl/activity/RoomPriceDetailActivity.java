@@ -146,22 +146,26 @@ public class RoomPriceDetailActivity extends BaseActivity
             @Override
             public void onSubmit(int p, int n)
             {
-
-                DialogUtils.showRoomPriceDialog(RoomPriceDetailActivity.this, new MyItemClickListener()
-                {
-                    @Override
-                    public void onItemClick(View view, int position)
-                    {
-
-                    }
-                });
-
+                int day = monthInfoList.get(p).getRoomDayInfoList().get(n).getDay();
+                showModifyPriceDialog(String.valueOf(day), String.valueOf(day));
             }
         });
 
         mRecyclerView.setAdapter(mRoomPriceMonthAdapter);
     }
 
+
+    private void showModifyPriceDialog(String startTime, String endTime)
+    {
+        DialogUtils.showRoomPriceDialog(startTime, endTime, RoomPriceDetailActivity.this, new MyOnClickListener.OnSubmitListener()
+        {
+            @Override
+            public void onSubmit(String content)
+            {
+
+            }
+        });
+    }
 
     @Override
     public void onClick(View v)
