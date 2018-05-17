@@ -229,7 +229,6 @@
             android:windowSoftInputMode="stateHidden"/>
 
 
-
         <activity
             android:name=".activity.ConferenceManageActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -241,6 +240,25 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
 
+
+        <activity
+            android:name=".activity.PictureManageActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
+
+
+        <activity
+            android:name=".activity.PictureRoomListActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
+
+        <activity
+            android:name=".activity.PicConferenceListActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
 
 
         <activity
