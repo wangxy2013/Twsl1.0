@@ -5,7 +5,7 @@ android {
     buildToolsVersion '25.0.2'
     defaultConfig {
         applicationId "com.twlrg.twsl"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 25
         multiDexEnabled true
         versionCode 1
@@ -16,7 +16,7 @@ android {
         release {
             keyAlias 'twsl'
             keyPassword 'twsl2018'
-            storeFile file('F:/otherPro/Twsl1.0/app/twsl.jks')
+            storeFile file('F:/pro/sztw/Twsl1.0/app/twsl.jks')
             storePassword 'twsl2018'
         }
     }
@@ -67,4 +67,7 @@ dependencies {
         // 如果已经引入 support:appcompat-v7 可以加上这句话
         exclude group: 'com.android.support', module: 'appcompat-v7'
     }
+
+    compile project(':tencentcloudlib')
+    compile 'com.meizu.flyme.internet:push-internal:3.6.3@aar'
 }
